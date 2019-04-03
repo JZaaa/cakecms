@@ -175,6 +175,10 @@ ServerRequest::addDetector('tablet', function ($request) {
     return $detector->isTablet();
 });
 
+Cake\I18n\Date::setToStringFormat('yyyy-MM-dd');
+Cake\I18n\FrozenDate::setToStringFormat('yyyy-MM-dd');
+Cake\I18n\Time::setToStringFormat('yyyy-MM-dd HH:mm:ss');
+Cake\I18n\FrozenTime::setToStringFormat('yyyy-MM-dd HH:mm:ss');
 /*
  * Enable immutable time objects in the ORM.
  *
