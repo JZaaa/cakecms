@@ -137,6 +137,13 @@ return [
             'duration' => '+1 years',
             'url' => env('CACHE_CAKEROUTES_URL', null),
         ],
+
+        'site' => [
+            'className' => 'Cake\Cache\Engine\FileEngine',
+            'path' => CACHE . 'site/',
+            'url' => env('CACHE_DEFAULT_URL', null),
+            'duration' => '+1 weeks',
+        ]
     ],
 
     /**
