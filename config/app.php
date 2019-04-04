@@ -142,7 +142,7 @@ return [
             'className' => 'Cake\Cache\Engine\FileEngine',
             'path' => CACHE . 'site/',
             'url' => env('CACHE_DEFAULT_URL', null),
-            'duration' => '+1 weeks',
+            'duration' => '+1 week',
         ]
     ],
 
@@ -176,7 +176,7 @@ return [
      *   breathing room to complete logging or error handling.
      */
     'Error' => [
-        'errorLevel' => E_ALL,
+        'errorLevel' => E_ALL & ~E_USER_DEPRECATED,
         'exceptionRenderer' => 'Cake\Error\ExceptionRenderer',
         'skipLog' => [],
         'log' => true,
@@ -261,10 +261,10 @@ return [
              * MySQL on MAMP uses port 8889, MAMP users will want to uncomment
              * the following line and set the port accordingly
              */
-            //'port' => 'non_standard_port_number',
-            'username' => 'my_app',
-            'password' => 'secret',
-            'database' => 'my_app',
+            'port' => '3308',
+            'username' => 'root',
+            'password' => '',
+            'database' => 'cakecms',
             /*
              * You do not need to set this flag to use full utf-8 encoding (internal default since CakePHP 3.6).
              */
@@ -388,6 +388,7 @@ return [
      * To use database sessions, load the SQL file located at config/schema/sessions.sql
      */
     'Session' => [
-        'defaults' => 'php',
+        'defaults' => 'cake',
+        'timeout' => 6400
     ],
 ];

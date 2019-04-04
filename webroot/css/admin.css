@@ -1,0 +1,248 @@
+/* 阴影 */
+html {
+  height: auto;
+  min-height: 100%;
+}
+body {
+  font-size: 13px;
+  font-weight: 400;
+  height: auto;
+  min-height: 100%;
+  background-color: #F7F7F7;
+}
+a,
+a:hover,
+a:link,
+a:visited,
+a:focus {
+  outline: none;
+  text-decoration: none;
+}
+.container {
+  width: 100%;
+  padding: 0;
+  max-width: none;
+}
+.dropdown-menu {
+  padding: 0;
+}
+.dropdown-menu > li > a {
+  color: #5A738E;
+}
+.dropdown-menu > li > a:focus,
+.dropdown-menu > li > a:hover {
+  text-decoration: none;
+  background-color: #f5f5f5;
+  color: #353535;
+}
+.bg-muted {
+  background: #f5f7fa;
+}
+.bg-white {
+  background: #fff;
+}
+.text-default {
+  color: #353535 !important;
+}
+.letter-space {
+  letter-spacing: 1px;
+}
+.letter-space-lg {
+  letter-spacing: 2px;
+}
+.space {
+  margin-bottom: 20px;
+}
+.space-lg {
+  margin-bottom: 40px;
+}
+.strong {
+  font-weight: 700;
+}
+.large {
+  font-size: 125%!important;
+}
+.bg-img-response {
+  width: 100%;
+  height: 100%;
+  z-index: -10;
+  zoom: 1;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-size: cover;
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+  background-position: center 0;
+}
+.shadow-0,
+.shadow-none {
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  -ms-box-shadow: none;
+}
+.w-2 {
+  float: left;
+  width: 20%;
+  position: relative;
+  min-height: 1px;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+.label.label-white {
+  background-color: #fff;
+  color: #353535;
+}
+.label.label-white.label-outline {
+  color: #fff;
+  background: 0 0;
+  border: 1px solid #fff;
+}
+.zad_container_main {
+  min-height: 100%;
+}
+.zad_container_main .zad_container_left {
+  z-index: 1;
+  top: 0;
+  left: 0;
+  min-height: 100%;
+  height: 100%;
+  background-color: #2A3F54;
+  color: #fff;
+  position: fixed;
+  overflow: visible;
+  width: 230px;
+  -webkit-transition: -webkit-transform 0.3s ease-in-out, width 0.3s ease-in-out;
+  -moz-transition: -moz-transform 0.3s ease-in-out, width 0.3s ease-in-out;
+  -o-transition: -o-transform 0.3s ease-in-out, width 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
+}
+.zad_container_main .zad_container_left .logo {
+  height: 57px;
+  line-height: 57px;
+  font-size: 20px;
+  text-align: center;
+  color: #fff;
+  width: 230px;
+  -webkit-transition: width 0.3s ease-in-out;
+  -o-transition: width 0.3s ease-in-out;
+  transition: width 0.3s ease-in-out;
+  display: block;
+  font-weight: 300;
+  overflow: hidden;
+  border-bottom: 1px solid #2d445b;
+}
+.zad_container_main .zad_container_left .zad_menu {
+  width: 230px;
+}
+.zad_container_main .zad_container_left .zad_menu .tree-menu {
+  border: none;
+}
+.zad_container_main .zad_container_left .zad_menu .tree-menu a {
+  font-size: 14px;
+  color: #fff;
+}
+.zad_container_main .zad_container_left .zad_menu .tree-menu > li > a {
+  border: none;
+  font-weight: 500;
+  margin-bottom: 6px;
+  padding: 13px 15px 12px;
+}
+.zad_container_main .zad_container_left .zad_menu .tree-menu > li > ul li {
+  background-color: #3b5876;
+}
+.zad_container_main .zad_container_left .zad_menu .tree-menu > li > ul li a {
+  padding-left: 15px;
+  font-size: 12px;
+}
+.zad_container_main .zad_container_left .zad_menu .tree-menu > li > ul li a:before {
+  font-family: ZenIcon;
+  content: '\e6e8';
+  display: inline-block;
+  min-width: 14px;
+  margin-right: 4px;
+  text-align: center;
+}
+.zad_container_main .zad_container_right {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  overflow-y: hidden;
+  margin-left: 230px;
+  -webkit-transition: -webkit-transform 0.3s ease-in-out, margin 0.3s ease-in-out;
+  -moz-transition: -moz-transform 0.3s ease-in-out, margin 0.3s ease-in-out;
+  -o-transition: -o-transform 0.3s ease-in-out, margin 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, margin 0.3s ease-in-out;
+}
+.zad_container_main .zad_container_right .zad_top_nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 57px;
+  background: #EDEDED;
+  border-bottom: 1px solid #D9DEE4;
+}
+.zad_container_main .zad_container_right .zad_top_nav .navbar-right {
+  margin: 0;
+  float: right;
+}
+.zad_container_main .zad_container_right .zad_top_nav .navbar-right > li > a {
+  display: inline-block;
+  height: 57px;
+  line-height: 37px;
+  color: #353535;
+}
+.zad_container_main .zad_container_right .zad_top_nav .navbar-right > li > a:hover,
+.zad_container_main .zad_container_right .zad_top_nav .navbar-right > li > a:focus {
+  background: #D9DEE4;
+}
+.zad_container_main .zad_container_right .zad_top_nav .navbar-right .dropdown-menu > li > a {
+  padding: 12px 20px;
+}
+.zad_container_main .zad_container_right .zad_content {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 57px;
+  bottom: 50px;
+  overflow: auto;
+}
+.zad_container_main .zad_footer {
+  z-index: 2;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  background-color: #fff;
+}
+.zad_container_main .zad_login_wrapper {
+  right: 0;
+  margin: 5% auto 0;
+  max-width: 350px;
+  position: relative;
+}
+.zad_container_main .zad_login_wrapper .zad_login {
+  position: absolute;
+  top: 100px;
+  width: 100%;
+  max-width: 350px;
+}
+.zad_container_main .zad_login_wrapper .zad_login .login_content {
+  margin: 0 auto;
+  padding: 25px 0 0;
+  position: relative;
+  text-shadow: 0 1px 0 #fff;
+  min-width: 280px;
+}
+.zad_container_main .zad_login_wrapper .zad_login .login_content .login_header {
+  font-size: 30px;
+  text-align: center;
+  font-weight: 500;
+  letter-spacing: 8px;
+  margin-bottom: 30px;
+}
+/*# sourceMappingURL=admin.css.map */

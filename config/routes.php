@@ -45,6 +45,14 @@ use Cake\Routing\Route\DashedRoute;
  */
 Router::defaultRouteClass(DashedRoute::class);
 
+Router::scope('/admin', ['plugin' => 'Admin'], function (RouteBuilder $routes) {
+    $routes->connect('/', ['controller' => 'Home', 'action' => 'index']);
+
+    $routes->connect('/:controller/:action/*');
+
+    $routes->fallbacks(DashedRoute::class);
+});
+
 Router::scope('/', function (RouteBuilder $routes) {
     // Register scoped middleware for in scopes.
 //    $routes->registerMiddleware('csrf', new CsrfProtectionMiddleware([
