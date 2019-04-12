@@ -52,4 +52,14 @@ class AppController extends Controller
          */
         //$this->loadComponent('Security');
     }
+
+
+    public function apiResponse($data = [])
+    {
+        $response = $this->response;
+
+        return $response->withCharset('UTF-8')
+            ->withType('application/json')
+            ->withStringBody(json_encode($data));
+    }
 }

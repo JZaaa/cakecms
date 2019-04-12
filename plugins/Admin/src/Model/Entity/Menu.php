@@ -16,8 +16,8 @@ use Cake\ORM\Entity;
  * @property string|null $url
  * @property int $sort
  *
- * @property \Admin\Model\Entity\ParentMenu $parent_menu
- * @property \Admin\Model\Entity\ChildMenu[] $child_menus
+ * @property \Admin\Model\Entity\Menu $parent_menu
+ * @property \Admin\Model\Entity\Menu[] $child_menus
  */
 class Menu extends Entity
 {
@@ -33,12 +33,15 @@ class Menu extends Entity
     protected $_accessible = [
         'parent_id' => true,
         'name' => true,
+        'icon' => true,
         'plugin' => true,
         'controller' => true,
         'action' => true,
         'params' => true,
         'url' => true,
         'sort' => true,
+        'is_root' => true,
+        'is_show' => true,
         'parent_menu' => true,
         'child_menus' => true
     ];

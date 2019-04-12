@@ -9,7 +9,7 @@ body {
   font-weight: 400;
   height: auto;
   min-height: 100%;
-  background-color: #F7F7F7;
+  background-color: #fff;
 }
 a, a:hover, a:link, a:visited,a:focus {
   outline: none;
@@ -197,6 +197,13 @@ a, a:hover, a:link, a:visited,a:focus {
       background: #EDEDED;
       border-bottom: 1px solid #D9DEE4;
 
+      .breadcrumb {
+        margin: 0;
+        display: inline-block;
+        height: @top-height;
+        line-height: 37px;
+      }
+
       .navbar-right {
         margin: 0;
         float: right;
@@ -225,7 +232,7 @@ a, a:hover, a:link, a:visited,a:focus {
       }
     }
 
-    .zad_content {
+    .zad_body {
       position: absolute;
       left: 0;
       right: 0;
@@ -243,7 +250,7 @@ a, a:hover, a:link, a:visited,a:focus {
     height: @footer-height;
     line-height: @footer-height;
     text-align: center;
-    background-color: #fff;
+    background-color: #F7F7F7;
   }
 
   .zad_login_wrapper {
@@ -274,4 +281,15 @@ a, a:hover, a:link, a:visited,a:focus {
       }
     }
   }
+}
+
+
+.zad-content {
+  padding: 10px;
+}
+
+.zad-header {
+  padding: 10px 10px 0;
+  margin-bottom: 15px;
+  clear: both;
 }

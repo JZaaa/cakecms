@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>CakeCMS</title>
     <link href="<?php echo $this->Url->webroot('assets/zui/css/zui.min.css')?>" rel="stylesheet">
+    <link href="<?php echo $this->Url->webroot('assets/zui/lib/bootbox/bootbox.min.css')?>" rel="stylesheet">
     <link href="<?php echo $this->Url->webroot('css/admin.css')?>" rel="stylesheet">
     <?php echo $this->fetch('css')?>
 </head>
@@ -15,7 +16,8 @@
         <a class="logo" href="<?php echo $this->Url->build(['plugin' => 'Admin', 'controller' => 'Home', 'action' => 'index'])?>">CakeCMS</a>
         <nav class="menu zad_menu" data-ride="menu">
             <ul id="zad_menu_tree" class="tree tree-menu" data-ride="tree" data-animate="true">
-                <li><a href="#"><i class="icon icon-th"></i>首页</a></li>
+                <li><a href="<?php echo $this->Url->build(['plugin' => 'Admin', 'controller' => 'Home', 'action' => 'index'], true)?>"><i class="icon icon-home"></i>首页</a></li>
+                <li><a href="<?php echo $this->Url->build(['plugin' => 'Admin', 'controller' => 'Menus', 'action' => 'index'], true)?>">菜单管理</a></li>
                 <li><a href="#"><i class="icon icon-user"></i>个人资料</a></li>
                 <li>
                     <a href="#"><i class="icon icon-time"></i>更新时间</a>
@@ -34,7 +36,7 @@
                         <li>
                             <a href="#">已就绪</a>
                             <ul>
-                                <li><a href="http://localhost:63343/zui-admin/index.html">已取消</a></li>
+                                <li><a href="<?php echo $this->Url->build(['plugin' => 'Admin', 'controller' => 'Menus', 'action' => 'index'], true)?>">已取消</a></li>
                                 <li><a href="#">已关闭</a></li>
                             </ul>
                         </li>
@@ -59,7 +61,7 @@
                 </li>
             </ul>
         </div>
-        <div class="zad_content">
+        <div class="zad_body">
             <?php echo $this->fetch('content') ?>
         </div>
         <div class="zad_footer">
@@ -73,6 +75,8 @@
 
 <script src="<?php echo $this->Url->webroot('js/jquery.min.js')?>"></script>
 <script src="<?php echo $this->Url->webroot('assets/zui/js/zui.min.js')?>"></script>
+<script src="<?php echo $this->Url->webroot('assets/zui/lib/bootbox/bootbox.min.js')?>"></script>
+<script src="<?php echo $this->Url->webroot('assets/validator/jquery.validator.min.js?local=zh-CN')?>"></script>
 <?php echo $this->fetch('js_before')?>
 <script src="<?php echo $this->Url->webroot('js/admin.js')?>"></script>
 <?php echo $this->fetch('js')?>

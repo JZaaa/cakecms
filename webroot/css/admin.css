@@ -8,7 +8,7 @@ body {
   font-weight: 400;
   height: auto;
   min-height: 100%;
-  background-color: #F7F7F7;
+  background-color: #fff;
 }
 a,
 a:hover,
@@ -183,6 +183,12 @@ a:focus {
   background: #EDEDED;
   border-bottom: 1px solid #D9DEE4;
 }
+.zad_container_main .zad_container_right .zad_top_nav .breadcrumb {
+  margin: 0;
+  display: inline-block;
+  height: 57px;
+  line-height: 37px;
+}
 .zad_container_main .zad_container_right .zad_top_nav .navbar-right {
   margin: 0;
   float: right;
@@ -200,7 +206,7 @@ a:focus {
 .zad_container_main .zad_container_right .zad_top_nav .navbar-right .dropdown-menu > li > a {
   padding: 12px 20px;
 }
-.zad_container_main .zad_container_right .zad_content {
+.zad_container_main .zad_container_right .zad_body {
   position: absolute;
   left: 0;
   right: 0;
@@ -217,7 +223,7 @@ a:focus {
   height: 50px;
   line-height: 50px;
   text-align: center;
-  background-color: #fff;
+  background-color: #F7F7F7;
 }
 .zad_container_main .zad_login_wrapper {
   right: 0;
@@ -244,5 +250,13 @@ a:focus {
   font-weight: 500;
   letter-spacing: 8px;
   margin-bottom: 30px;
+}
+.zad-content {
+  padding: 10px;
+}
+.zad-header {
+  padding: 10px 10px 0;
+  margin-bottom: 15px;
+  clear: both;
 }
 /*# sourceMappingURL=admin.css.map */
