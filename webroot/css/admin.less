@@ -147,6 +147,9 @@ a, a:hover, a:link, a:visited,a:focus {
           color: #fff;
         }
         > li {
+          .list-toggle {
+            top: 12px;
+          }
           >a{
             border: none;
             font-weight: 500;
@@ -292,4 +295,62 @@ a, a:hover, a:link, a:visited,a:focus {
   padding: 10px 10px 0;
   margin-bottom: 15px;
   clear: both;
+}
+
+.panel > .table {
+  &.table-bordered {
+    border: none;
+    tr {
+      &:first-child {
+        td,th {
+          border-top: none;
+        }
+      }
+
+      &:last-child {
+        td, th {
+          border-bottom: none;
+        }
+      }
+
+      td,th {
+        &:first-child {
+          border-left: none;
+        }
+        &:last-child {
+          border-right: none;
+        }
+      }
+    }
+
+  }
+
+}
+
+.table-list {
+  td {
+    vertical-align: middle;
+    &:first-child {
+      width: 130px;
+      text-align: right;
+    }
+
+    &:last-child {
+      color: #666;
+
+    }
+  }
+}
+.text-center {
+  thead>tr>th {
+    text-align: center;
+  }
+}
+.datagrid-container {
+  background-color: transparent;
+}
+.checkbox-primary {
+  &.inline-block {
+    display: inline-block;
+  }
 }

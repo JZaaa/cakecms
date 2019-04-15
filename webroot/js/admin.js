@@ -428,13 +428,15 @@ $(document).ready(function() {
   // =================
   $(window).on('load', function(e) {
     $(Selector.data).each(function() {
-      Plugin.call($(this))
+      var $this = $(this)
+      Plugin.call($this, $this.data())
     })
   })
 
   $(document).on(ZAD.eventType.initUI, function(e) {
     $(e.target).find(Selector.data).each(function() {
-      Plugin.call($(this))
+      var $this = $(this)
+      Plugin.call($this, $this.data())
     })
   })
 
@@ -484,6 +486,8 @@ $(document).ready(function() {
           setTimeout(function () {
             window.location.reload()
           }, response.timeout)
+        } else {
+          $.alertmsg('success', message)
         }
       }
     },
@@ -549,6 +553,114 @@ $(document).ready(function() {
 
 }(jQuery))
 
+/**
+ * checkbox 组， data-toggle="checkgroup" 可实例化
+ * var checkbox = new CheckGroup('#checkbox'); 或 var checkbox = $('#checkbox').data('zad.checkgroup');
+ * 获取选中项：checkbox.getCheckedValue()
+ */
+;(function($) {
+  'use strict'
+
+  var DataKey = 'zad.checkgroup'
+
+  var Default = {
+    group: 'id'
+  }
+
+  var Selector = {
+    data: '[data-toggle="checkgroup"]'
+  }
+
+  var CheckGroup = function(element, options) {
+    this.element = $(element)
+    this.options = options
+    this.children = this.getChildren()
+    this._setUpListener()
+  }
+
+  CheckGroup.prototype._setUpListener = function() {
+    this.element.on('change', function(e) {
+      if ($(e.target).is(':checked')) {
+        this.doCheck()
+      } else {
+        this.cancelCheck()
+      }
+    }.bind(this))
+  }
+
+  CheckGroup.prototype.getChildren = function() {
+    return $('[type="checkbox"][name="'+ this.options.group +'"]')
+  }
+
+
+  CheckGroup.prototype.doCheck = function() {
+    this.children.prop('checked', true)
+  }
+
+  CheckGroup.prototype.cancelCheck = function() {
+    this.children.prop('checked', false)
+  }
+
+  CheckGroup.prototype.getCheckedValue = function() {
+    var children = this.getChildren()
+    var value = []
+    children.each(function() {
+      var $this = $(this)
+      if ($this.is(':checked')) {
+        value.push($this.val())
+      }
+    })
+    return value.join(',')
+  }
+
+  function Plugin(option) {
+
+    return this.each(function () {
+      var $this = $(this)
+      var data  = $this.data(DataKey)
+
+      if (!data) {
+        var options = $.extend({}, Default, typeof option == 'object' && option)
+        $this.data(DataKey, (data = new CheckGroup(this, options)))
+      }
+
+      if (typeof data == 'string') {
+        if (typeof data[option] == 'undefined') {
+          throw new Error('No method named ' + option)
+        }
+        data[option]()
+      }
+
+    })
+  }
+
+  var old = $.fn.checkGroup
+
+  $.fn.checkGroup = Plugin
+  $.fn.checkGroup.Constructor = CheckGroup
+
+  // No Conflict Mode
+  // ================
+  $.fn.checkGroup.noConflict = function() {
+    $.fn.checkGroup = old
+    return this
+  }
+
+  $(window).on('load', function(e) {
+    $(Selector.data).each(function() {
+      var $this = $(this)
+      Plugin.call($this, $this.data())
+    })
+  })
+
+  $(document).on(ZAD.eventType.initUI, function(e) {
+    $(e.target).find(Selector.data).each(function() {
+      var $this = $(this)
+      Plugin.call($this, $this.data())
+    })
+  })
+
+}(jQuery))
 /**
  * 外部插件等初始化配置
  */

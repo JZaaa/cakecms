@@ -16,34 +16,33 @@
         <a class="logo" href="<?php echo $this->Url->build(['plugin' => 'Admin', 'controller' => 'Home', 'action' => 'index'])?>">CakeCMS</a>
         <nav class="menu zad_menu" data-ride="menu">
             <ul id="zad_menu_tree" class="tree tree-menu" data-ride="tree" data-animate="true">
-                <li><a href="<?php echo $this->Url->build(['plugin' => 'Admin', 'controller' => 'Home', 'action' => 'index'], true)?>"><i class="icon icon-home"></i>首页</a></li>
-                <li><a href="<?php echo $this->Url->build(['plugin' => 'Admin', 'controller' => 'Menus', 'action' => 'index'], true)?>">菜单管理</a></li>
-                <li><a href="#"><i class="icon icon-user"></i>个人资料</a></li>
-                <li>
-                    <a href="#"><i class="icon icon-time"></i>更新时间</a>
-                    <ul>
-                        <li><a href="#">今天</a></li>
-                        <li><a href="#">明天</a></li>
-                        <li><a href="#">昨天</a></li>
-                        <li><a href="#">本周</a></li>
-                    </ul>
-                </li>
-                <li><a href="#"><i class="icon icon-trash"></i>垃圾篓</a></li>
-                <li><a href="#"><i class="icon icon-list-ul"></i>全部</a></li>
-                <li>
-                    <a href="#"><i class="icon icon-tasks"></i>状态</a>
-                    <ul>
-                        <li>
-                            <a href="#">已就绪</a>
+                <?php foreach ($MENUS as $item):
+                    if (!empty($item->controller) && !empty($item->action)) {
+                        $url =  $this->Url->build(['plugin' => $item->plugin, 'controller' => $item->controller, 'action' => $item->action], true);
+                    } else {
+                        $url = '#';
+                    }
+                    ?>
+                    <li>
+                        <a href="<?php echo $url?>">
+                            <i class="icon icon-<?php echo $item->icon?>"></i>
+                            <?php echo $item->name?>
+                        </a>
+                        <?php if (!empty($item->children)):?>
                             <ul>
-                                <li><a href="<?php echo $this->Url->build(['plugin' => 'Admin', 'controller' => 'Menus', 'action' => 'index'], true)?>">已取消</a></li>
-                                <li><a href="#">已关闭</a></li>
+                                <?php foreach ($item->children as $value):
+                                    if (!empty($value->controller) && !empty($value->action)) {
+                                        $url =  $this->Url->build(['plugin' => $value->plugin, 'controller' => $value->controller, 'action' => $value->action], true);
+                                    } else {
+                                        $url = '#';
+                                    }
+                                    ?>
+                                    <li><a href="<?php echo $url?>"><?php echo $value->name?></a></li>
+                                <?php endforeach;?>
                             </ul>
-                        </li>
-                        <li><a href="#">进行中</a></li>
-                        <li><a href="#">已完成</a></li>
-                    </ul>
-                </li>
+                        <?php endif;?>
+                    </li>
+                <?php endforeach;?>
             </ul>
         </nav>
     </div>

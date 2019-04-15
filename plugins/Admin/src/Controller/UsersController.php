@@ -2,6 +2,7 @@
 namespace Admin\Controller;
 
 use Admin\Controller\AppController;
+use Cake\ORM\TableRegistry;
 
 /**
  * Users Controller
@@ -29,6 +30,9 @@ class UsersController extends AppController
                 $tip = '用户名或密码错误';
                 $user = $this->Auth->identify();
                 if ($user && $user['status'] == 1) {
+                    // menus写入
+                    $menus = TableRegistry::getTableLocator()->get('Admin.Menus')->getMenus($user['role_id']);
+                    $user['menus'] = $menus;
                     $this->Auth->setUser($user);
                     return $this->redirect($this->Auth->redirectUrl());
                 }

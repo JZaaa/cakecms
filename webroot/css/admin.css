@@ -142,6 +142,9 @@ a:focus {
   font-size: 14px;
   color: #fff;
 }
+.zad_container_main .zad_container_left .zad_menu .tree-menu > li .list-toggle {
+  top: 12px;
+}
 .zad_container_main .zad_container_left .zad_menu .tree-menu > li > a {
   border: none;
   font-weight: 500;
@@ -258,5 +261,43 @@ a:focus {
   padding: 10px 10px 0;
   margin-bottom: 15px;
   clear: both;
+}
+.panel > .table.table-bordered {
+  border: none;
+}
+.panel > .table.table-bordered tr:first-child td,
+.panel > .table.table-bordered tr:first-child th {
+  border-top: none;
+}
+.panel > .table.table-bordered tr:last-child td,
+.panel > .table.table-bordered tr:last-child th {
+  border-bottom: none;
+}
+.panel > .table.table-bordered tr td:first-child,
+.panel > .table.table-bordered tr th:first-child {
+  border-left: none;
+}
+.panel > .table.table-bordered tr td:last-child,
+.panel > .table.table-bordered tr th:last-child {
+  border-right: none;
+}
+.table-list td {
+  vertical-align: middle;
+}
+.table-list td:first-child {
+  width: 130px;
+  text-align: right;
+}
+.table-list td:last-child {
+  color: #666;
+}
+.text-center thead > tr > th {
+  text-align: center;
+}
+.datagrid-container {
+  background-color: transparent;
+}
+.checkbox-primary.inline-block {
+  display: inline-block;
 }
 /*# sourceMappingURL=admin.css.map */

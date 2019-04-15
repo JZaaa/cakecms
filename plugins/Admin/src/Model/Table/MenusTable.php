@@ -2,6 +2,7 @@
 namespace Admin\Model\Table;
 
 use Cake\Collection\Collection;
+use Cake\Core\Configure;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -178,51 +179,46 @@ class MenusTable extends Table
 
     /**
      * 获取菜单树，两个参数必须设置一个
-     * 当$role_id不为空，且$menus_id为空时，将会从数据库查询role_id对应菜单id
+     * 当$role_id不为空，且$menus_id为空，将会从数据库查询role_id对应菜单id
      * @param null $role_id 用户组id
-     * @param array $menus_ids 查询菜单ids 数组
      * @return array
      */
-    public function getMenus($role_id = null, $menus_ids = null)
+    public function getMenus($role_id = null)
     {
         $menus = [];
 
-        // 动态获取
+
         if (!empty($role_id)) {
+            $conditions = [];
+
             $roleMenu = TableRegistry::getTableLocator()->get('Admin.Roles')->getData(array('Roles.id' => $role_id));
-            $menus_ids = json_decode($roleMenu->menus);
-        }
 
-//        if (is_null($menus_ids) && !empty($role_id)) {
-//            $roleMenu = TableRegistry::getTableLocator()->get('Admin.Roles')->getData(array('Roles.id' => $role_id));
-//            $menus_ids = json_decode($roleMenu->menus);
-//        }
+            // 超级管理员权限
+            if ($roleMenu['is_super'] != 1) {
+                $menus_ids = explode(',', $roleMenu->role_menu);
 
-        if (!empty($menus_ids)) {
+                $conditions['id in'] = $menus_ids;
+            }
+
             // 生成菜单树
             $menus = $this->find()
-                ->select([
-                    'icon', 'level', 'parent_id', 'name', 'id', 'isshow', 'reload', 'target'
-                ])
-                ->where([
-                    'id in' => $menus_ids
-                ])
+                ->where($conditions)
                 ->order([
                     'sort' => 'desc',
                     'id' => 'desc'
                 ])
                 ->reject(function ($item) {
                     // 删除隐藏菜单
-                    return $item->isshow != 1;
+                    return $item->is_show != 1;
                 })
-                ->nest('id', 'parent_id') // 生成树
+                ->nest('id', 'parent_id')// 生成树
                 ->filter(function ($item) {
                     // 返回包含根菜单的新数组
                     return $item->parent_id == 0;
                 })
                 ->toArray();
-
         }
+
         return $menus;
 
     }

@@ -3,7 +3,10 @@
 namespace Admin\Controller;
 
 use App\Controller\AppController as BaseController;
+use Cake\Core\Configure;
+use Cake\Event\Event;
 use Cake\Http\Exception\InternalErrorException;
+use Cake\ORM\TableRegistry;
 
 class AppController extends BaseController
 {
@@ -41,6 +44,35 @@ class AppController extends BaseController
 
         $this->set('username', $this->Auth->user('username'));
         $this->viewBuilder()->setLayout('admin');
+    }
+
+    /**
+     * 页面渲染之前处理
+     * @param Event $event
+     * @return \Cake\Http\Response|void|null
+     */
+    public function beforeRender(Event $event)
+    {
+        // 若为普通后台页面，则获取页面菜单
+        if ($this->viewBuilder()->getLayout() == 'admin') {
+            $this->getMenusTree();
+        }
+    }
+
+    /**
+     * 获取页面菜单
+     * debug打开时，动态获取，否则session获取，修改权限时需重新登录
+     */
+    private function getMenusTree()
+    {
+        $user = $this->Auth->user();
+        if (Configure::read('debug')) {
+            $MENUS = TableRegistry::getTableLocator()->get('Admin.Menus')->getMenus($user['role_id']);
+        } else {
+            $MENUS =$user['menus'];
+        }
+
+        $this->set(compact('MENUS'));
     }
 
 

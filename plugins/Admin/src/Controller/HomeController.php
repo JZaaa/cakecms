@@ -9,7 +9,6 @@
 namespace Admin\Controller;
 
 
-use App\Lib\CakeBackup;
 use Cake\Core\Configure;
 
 class HomeController extends AppController
@@ -72,6 +71,10 @@ class HomeController extends AppController
             [
                 'value' => ini_get('memory_limit'),
                 'label' => '最大占用内存'
+            ],
+            [
+                'value' => implode('，', get_loaded_extensions()),
+                'label' => '加载模块'
             ]
 
         ];

@@ -79,4 +79,15 @@ class RolesTable extends Table
 
         return $validator;
     }
+
+
+    /*
+     * 获取数据详情
+     *
+     * */
+    public function getData($conditions = []) {
+        $query = $this->find('all')
+            ->where($conditions);
+        return $query->first();
+    }
 }
