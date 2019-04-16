@@ -90,4 +90,25 @@ class RolesTable extends Table
             ->where($conditions);
         return $query->first();
     }
+
+    /**
+     * 返回角色列表
+     * @param bool $show_super 是否显示超级权限
+     * @return array
+     */
+    public function getList($show_super = false)
+    {
+        $conditions = [];
+
+        if (!$show_super) {
+            $conditions['is_super'] = 2;
+        }
+        return $this->find('list', [
+            'keyField' => 'id',
+            'valueField' => 'name'
+        ])
+            ->where($conditions)
+            ->toArray();
+
+    }
 }

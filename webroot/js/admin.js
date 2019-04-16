@@ -2,6 +2,7 @@ var $C_RIGHT = $('.zad_container_right')
 var $CONTAINER = $('#zad_container_main')
 var CURRENT_URL = window.location.href.split('#')[0].split('?')[0]
 var $MENU_TREE = $('#zad_menu_tree')
+var C_DIALOG = undefined // 当前的dialog插件
 
 $(document).ready(function() {
   // 右侧栏目设置高度
@@ -44,6 +45,14 @@ $(document).ready(function() {
   $.extend(Function.prototype, {
     toFunc: function() {
       return this
+    }
+  })
+
+  $.fn.extend({
+    isTag: function(tn) {
+      if (!tn) return false
+      if (!$(this).prop('tagName')) return false
+      return $(this)[0].tagName.toLowerCase() === tn
     }
   })
 
@@ -145,7 +154,7 @@ $(document).ready(function() {
         if (opt.error) {
           opt.error(xhr, ajaxOptions, thrownError)
         } else {
-          $.alertmsg('error', '接口请求错误！')
+          $.alertmsg('default', '接口请求失败！')
         }
       },
       beforeSend: function() {
@@ -245,7 +254,15 @@ $(document).ready(function() {
   var DataKey = 'zad.dialog'
 
   var Default = {
-    moveable: true
+    moveable: true,
+    ajaxOptions: {
+      error: function() {
+        if (C_DIALOG) {
+          C_DIALOG.close()
+        }
+        $.alertmsg('default', '请求接口失败！')
+      }
+    }
   }
 
   var Selector = {
@@ -257,6 +274,8 @@ $(document).ready(function() {
     this.options = options
 
     this.dialog = new $.zui.ModalTrigger(options)
+
+    C_DIALOG = this.dialog
 
     this._setUpListener()
   }
@@ -270,7 +289,7 @@ $(document).ready(function() {
   }
 
   Dialog.prototype.show = function() {
-    this.dialog.show({
+    var a = this.dialog.show({
       loaded: function(e) {
         $(e.target).trigger(ZAD.eventType.initUI)
       }
@@ -278,7 +297,7 @@ $(document).ready(function() {
   }
 
   Dialog.prototype.hide = function() {
-    this.dialog.hide()
+    this.dialog.close()
   }
 
 
@@ -692,23 +711,144 @@ $(document).ready(function() {
   })
 
 }(jQuery))
+
+/**
+ * chosen|chosenIcons 组件二次封装
+ * chosenIcons => true 使用图标选择插件独立组件
+ */
+;(function($) {
+  'use strict'
+
+  var DataKey = 'zad.selectpicker'
+
+  var Default = {
+    lang: 'zh_cn',
+    no_results_text: '没有找到',
+    disable_search_threshold: 10,
+    search_contains: true,
+    compact_search: true,
+    width: '100%',
+    chosenIcons: false
+  }
+
+  var Selector = {
+    data: '[data-toggle="selectpicker"]'
+  }
+
+  var SelectPicker = function(element, options) {
+    this.element = $(element)
+    this.options = options
+    if (options.chosenIcons) {
+      this.element.chosenIcons(this.options)
+    } else {
+      this.element.chosen(this.options)
+    }
+  }
+
+  // Plugin Definition
+  // =================
+  function Plugin(option) {
+    return this.each(function () {
+      var $this = $(this)
+      var options = $.extend({}, Default, $this.data(), typeof option == 'object' && option);
+
+      if (options.chosenIcons) {
+        new SelectPicker($this, options)
+      } else {
+        var data  = $this.data(DataKey)
+
+        if (!data) {
+          $this.data(DataKey, (data = new SelectPicker($this, options)))
+        }
+
+        if (typeof data == 'string') {
+          if (typeof data[option] == 'undefined') {
+            throw new Error('No method named ' + option)
+          }
+          data[option]()
+        }
+      }
+
+    })
+  }
+
+  var old = $.fn.selectpicker
+
+  $.fn.selectpicker = Plugin
+  $.fn.selectpicker.Constructor = SelectPicker
+
+  // No Conflict Mode
+  // ================
+  $.fn.selectpicker.noConflict = function () {
+    $.fn.selectpicker = old
+    return this
+  }
+
+  // Data API
+  // ==================
+  $(window).on('load', function () {
+    $(Selector.data).each(function() {
+      Plugin.call($(this))
+    })
+  })
+
+  $(document).on(ZAD.eventType.initUI, function(e) {
+    $(e.target).find(Selector.data).each(function() {
+      Plugin.call($(this))
+    })
+  })
+
+}(jQuery))
 /**
  * 外部插件等初始化配置
  */
 ;(function($) {
   'use strict'
 
-  // nice-validator全局配置，适配zui表单
-  $.validator.config({
-    validClass: 'has-success', // 正确类，如不需要可删除
-    invalidClass: 'has-error',
-    bindClassTo: '.form-group',
-    msgClass: 'help-block',
-    msgWrapper: 'div',
-    msgMaker: function(opt){
-      return opt.msg
-    }
+  if ($.validator) {
+    // nice-validator全局配置，适配zui表单
+    $.validator.config({
+      validClass: 'has-success', // 正确类，如不需要可删除
+      invalidClass: 'has-error',
+      bindClassTo: '.form-group',
+      msgClass: 'help-block',
+      msgWrapper: 'div',
+      msgMaker: function(opt){
+        return opt.msg
+      }
+    })
+  }
+
+  $(document).on(ZAD.eventType.initUI, function(e) {
+    zadFixedUi()
   })
+
+  /**
+   * 修改样式
+   * 添加size支持
+   */
+  var zadFixedUi = function() {
+    $(':text, :password, textarea, :button, a.btn').each(function() {
+      var $element = $(this)
+      if (($element.is(':text') || $element.is(':password') || $element.isTag('textarea')) && !$element.hasClass('form-control')) {
+        $element.addClass('form-control')
+      }
+
+      var size = $element.attr('size') || $element.attr('cols')
+      if (!size) return
+      var width = 0
+      if (size.charAt(size.length - 1) !== '%') {
+        width = size * 10
+      } else {
+        width = size
+      }
+      if (width) $element.css('width', width)
+    })
+
+  }
+
+  zadFixedUi()
+
 
 
 }(jQuery))

@@ -2,7 +2,7 @@
 namespace Admin\Controller;
 
 
-use App\Lib\CakeBackup;
+use JZaaa\CakeUtils\Lib\CakeBackup;
 
 class CogsController extends AppController {
 
@@ -10,6 +10,7 @@ class CogsController extends AppController {
      * 数据库管理
      */
     public function database() {
+
         $driver = CakeBackup::getInstance();
 
         if ($this->request->is('post')) {
@@ -35,4 +36,15 @@ class CogsController extends AppController {
 
         $this->set(compact('data'));
     }
+
+
+    public function test()
+    {
+        $driver = CakeBackup::getInstance();
+
+        $a = $driver->getDriver();
+        debug($a);
+        exit;
+    }
+
 }

@@ -181,11 +181,14 @@ class MenusTable extends Table
      * 获取菜单树，两个参数必须设置一个
      * 当$role_id不为空，且$menus_id为空，将会从数据库查询role_id对应菜单id
      * @param null $role_id 用户组id
+     * @param bool $collection 聚合功能，返回Menus，与是否为超级权限
      * @return array
      */
-    public function getMenus($role_id = null)
+    public function getMenus($role_id = null, $collection = false)
     {
         $menus = [];
+
+        $super = false;
 
 
         if (!empty($role_id)) {
@@ -198,7 +201,10 @@ class MenusTable extends Table
                 $menus_ids = explode(',', $roleMenu->role_menu);
 
                 $conditions['id in'] = $menus_ids;
+            } else {
+                $super = true;
             }
+
 
             // 生成菜单树
             $menus = $this->find()
@@ -219,7 +225,10 @@ class MenusTable extends Table
                 ->toArray();
         }
 
-        return $menus;
+        return $collection ? [
+            'menus' => $menus,
+            'super' => $super
+        ] : $menus;
 
     }
 

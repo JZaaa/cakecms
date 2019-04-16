@@ -7,6 +7,8 @@
     <title>CakeCMS</title>
     <link href="<?php echo $this->Url->webroot('assets/zui/css/zui.min.css')?>" rel="stylesheet">
     <link href="<?php echo $this->Url->webroot('assets/zui/lib/bootbox/bootbox.min.css')?>" rel="stylesheet">
+    <link href="<?php echo $this->Url->webroot('assets/zui/lib/chosen/chosen.min.css')?>" rel="stylesheet">
+    <link href="<?php echo $this->Url->webroot('assets/zui/lib/chosenicons/zui.chosenicons.min.css')?>" rel="stylesheet">
     <link href="<?php echo $this->Url->webroot('css/admin.css')?>" rel="stylesheet">
     <?php echo $this->fetch('css')?>
 </head>
@@ -25,7 +27,7 @@
                     ?>
                     <li>
                         <a href="<?php echo $url?>">
-                            <i class="icon icon-<?php echo $item->icon?>"></i>
+                            <i class="icon <?php echo $item->icon?>"></i>
                             <?php echo $item->name?>
                         </a>
                         <?php if (!empty($item->children)):?>
@@ -51,7 +53,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <li class="">
                     <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        <?php echo $username?>
+                        <?php echo $USERNAME?>
                         <span class="icon icon-angle-down"></span>
                     </a>
                     <ul class="dropdown-menu pull-right">
@@ -75,6 +77,8 @@
 <script src="<?php echo $this->Url->webroot('js/jquery.min.js')?>"></script>
 <script src="<?php echo $this->Url->webroot('assets/zui/js/zui.min.js')?>"></script>
 <script src="<?php echo $this->Url->webroot('assets/zui/lib/bootbox/bootbox.min.js')?>"></script>
+<script src="<?php echo $this->Url->webroot('assets/zui/lib/chosen/chosen.min.js')?>"></script>
+<script src="<?php echo $this->Url->webroot('assets/zui/lib/chosenicons/zui.chosenicons.min.js')?>"></script>
 <script src="<?php echo $this->Url->webroot('assets/validator/jquery.validator.min.js?local=zh-CN')?>"></script>
 <?php echo $this->fetch('js_before')?>
 <script src="<?php echo $this->Url->webroot('js/admin.js')?>"></script>

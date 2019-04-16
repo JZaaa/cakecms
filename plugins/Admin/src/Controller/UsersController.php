@@ -31,8 +31,18 @@ class UsersController extends AppController
                 $user = $this->Auth->identify();
                 if ($user && $user['status'] == 1) {
                     // menus写入
-                    $menus = TableRegistry::getTableLocator()->get('Admin.Menus')->getMenus($user['role_id']);
-                    $user['menus'] = $menus;
+                    $menus = TableRegistry::getTableLocator()->get('Admin.Menus')->getMenus($user['role_id'], true);
+
+                    $data = $this->Users->get($user['id']);
+                    $data = $this->Users->patchEntity($data, [
+                        'id' => $user['id'],
+                        'login_ip' => $this->request->clientIp(),
+                        'login_count' => $user['login_count'] + 1
+                    ]);
+                    $this->Users->save($data);
+
+                    $user['menus'] = $menus['menus'];
+                    $user['is_super'] = $menus['super'];
                     $this->Auth->setUser($user);
                     return $this->redirect($this->Auth->redirectUrl());
                 }
@@ -65,4 +75,125 @@ class UsersController extends AppController
     {
         return $this->redirect($this->Auth->logout());
     }
+
+
+    /**
+     * 系统用户
+     */
+    public function index()
+    {
+        $this->setPage();
+
+        $conditions = [];
+
+        if (!empty($username = $this->request->getQuery('username'))) {
+            $conditions['username'] = $username;
+        }
+
+        $query = $this->Users->find()
+            ->contain([
+                'Roles' => [
+                    'fields' => [
+                        'id', 'name', 'is_super'
+                    ]
+                ]
+            ])
+            ->selectAllExcept($this->Users, ['password', 'created', 'modified'])
+            ->where($conditions)
+            ->order([
+                'Users.id' => 'desc'
+            ]);
+
+        $data = $this->paginate($query);
+
+
+        $this->set(compact('data', 'username'));
+    }
+
+    /**
+     * 新增
+     * @return \App\Controller\AppController
+     */
+    public function add()
+    {
+
+        if ($this->request->is('post')) {
+            $data = $this->Users->newEntity();
+            $newData = $this->request->getData();
+
+            $data = $this->Users->patchEntity($data, $newData);
+
+            if ($this->Users->save($data)) {
+                return $this->jsonResponse(200);
+            }
+
+            return $this->getError($data);
+        }
+
+        $super = $this->Auth->user('is_super');
+
+        $roles = TableRegistry::getTableLocator()->get('Admin.Roles')->getList($super);
+
+        $status = $this->Users->getStatus();
+
+        $this->ajaxView();
+        $this->set(compact('id', 'roles', 'super', 'status', 'data'));
+    }
+
+    /**
+     * 编辑
+     * @param null $id
+     * @return \App\Controller\AppController
+     */
+    public function edit($id = null)
+    {
+        $data = $this->Users->get($id);
+
+        if ($this->request->is('post')) {
+
+            $newData = $this->request->getData();
+
+            $data = $this->Users->patchEntity($data, $newData, [
+                'fields' => [
+                    'username', 'nickname', 'status'
+                ]
+            ]);
+
+            if ($this->Users->save($data)) {
+                return $this->jsonResponse(200);
+            }
+
+            return $this->getError($data);
+        }
+
+        $super = $this->Auth->user('is_super');
+
+        $roles = TableRegistry::getTableLocator()->get('Admin.Roles')->getList($super);
+
+        $status = $this->Users->getStatus();
+
+        $this->ajaxView();
+        $this->set(compact('id', 'roles', 'super', 'status', 'data'));
+    }
+
+    /**
+     * 删除
+     * @param null $id
+     * @return \App\Controller\AppController
+     */
+    public function delete($id = null)
+    {
+        if ($this->request->is('post')) {
+            $data = $this->Users->get($id);
+
+            if ($this->Users->delete($data)) {
+                return $this->jsonResponse(200);
+            }
+        }
+
+        return $this->jsonResponse(300);
+    }
+
+
+
 }

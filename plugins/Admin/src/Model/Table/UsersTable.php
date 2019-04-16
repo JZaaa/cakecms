@@ -109,4 +109,13 @@ class UsersTable extends Table
 
         return $rules;
     }
+
+
+    public function getStatus()
+    {
+        return [
+            1 => '正常',
+            2 => '冻结'
+        ];
+    }
 }

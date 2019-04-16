@@ -300,4 +300,8 @@ a:focus {
 .checkbox-primary.inline-block {
   display: inline-block;
 }
+.table td,
+.table th {
+  vertical-align: middle;
+}
 /*# sourceMappingURL=admin.css.map */

@@ -42,7 +42,7 @@ class AppController extends BaseController
             throw new InternalErrorException($e->getMessage());
         }
 
-        $this->set('username', $this->Auth->user('username'));
+        $this->set('USERNAME', $this->Auth->user('username'));
         $this->viewBuilder()->setLayout('admin');
     }
 
@@ -148,5 +148,20 @@ class AppController extends BaseController
             'message' => '操作失败！' . $message,
             'code' => 300
         ]) : $message;
+    }
+
+
+    /**
+     * @param int $numPerPage
+     */
+    public function setPage($numPerPage = 20)
+    {
+        $page = !empty($this->request->getData('page')) ? $this->request->getData('page') : (!empty($this->request->getQuery('page')) ? $this->request->getQuery('page') : 1);
+
+        $this->paginate['page'] = $page;
+        $this->paginate['limit'] = $numPerPage;
+
+        $this->set(compact('page', 'numPerPage'));
+
     }
 }

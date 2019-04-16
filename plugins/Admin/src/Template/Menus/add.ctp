@@ -7,7 +7,7 @@
         <div class="col-sm-6">
             <div class="form-group">
                 <label for="parent_id">父菜单</label>
-                <select id="parent_id" name="parent_id" class="form-control">
+                <select id="parent_id" name="parent_id" class="chosen-select form-control" data-toggle="selectpicker">
                     <option value="">顶级菜单</option>
                     <?php foreach ($parents as $key => $item):?>
                         <option value="<?php echo $key?>"><?php echo $item?></option>
@@ -18,7 +18,7 @@
         <div class="col-sm-6">
             <div class="form-group">
                 <label for="icon">图标</label>
-                <input id="icon" name="icon" type="text" class="form-control">
+                <select id="icon" name="icon" class="chosen-select form-control" data-toggle="selectpicker" data-chosen-icons="true"></select>
             </div>
         </div>
     </div>
