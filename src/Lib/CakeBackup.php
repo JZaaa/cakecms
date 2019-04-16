@@ -117,7 +117,7 @@ class CakeBackup
     /**
      * 优化表
      * @param array|string $tables [table1, table2 ...] 或 'table1,table2'
-     * @return array
+     * @return bool
      */
     public function optimize($tables) {
 
@@ -125,9 +125,13 @@ class CakeBackup
             $tables = implode(',', $tables);
         }
 
+        if (empty($tables)) {
+            return false;
+        }
+
         return $this->connection
             ->execute("OPTIMIZE TABLE $tables")
-            ->fetchAll();
+            ->execute();
     }
 
 
@@ -135,7 +139,7 @@ class CakeBackup
      * 修复表
      * 注：仅 MyISAM 可用
      * @param $tables array|string [table1, table2 ...] 或 'table1,table2'
-     * @return array
+     * @return bool
      */
     public function repair($tables) {
 
@@ -143,9 +147,13 @@ class CakeBackup
             $tables = implode(',', $tables);
         }
 
+        if (empty($tables)) {
+            return false;
+        }
+
         return $this->connection
             ->execute("REPAIR TABLE $tables")
-            ->fetchAll();
+            ->execute();
     }
 
 
@@ -278,7 +286,7 @@ class CakeBackup
 
         $sql = '/*Table structure for table `'.$table.'` */' . PHP_EOL . PHP_EOL;
         $sql .= 'DROP TABLE IF EXISTS `' . $table . '`;' . PHP_EOL . PHP_EOL;
-        $sql .= $structure['Create Table'];
+        $sql .= $structure['Create Table'] . ';' . PHP_EOL . PHP_EOL;
         return $sql;
 
     }

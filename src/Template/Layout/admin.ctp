@@ -11,7 +11,7 @@
     <?php echo $this->fetch('css')?>
 </head>
 <body>
-<div class="container zad_container_main">
+<div id="zad_container_main" class="container zad_container_main load-indicator">
     <div class="zad_container_left">
         <a class="logo" href="<?php echo $this->Url->build(['plugin' => 'Admin', 'controller' => 'Home', 'action' => 'index'])?>">CakeCMS</a>
         <nav class="menu zad_menu" data-ride="menu">

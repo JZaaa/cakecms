@@ -12,8 +12,22 @@ class CogsController extends AppController {
     public function database() {
         $driver = CakeBackup::getInstance();
 
-
         if ($this->request->is('post')) {
+            $data = $this->request->getData();
+            switch ($data['type']) {
+                case 'bfdb': // 备份数据库
+                    $driver->backupDB();
+                    break;
+                case 'bf': // 备份表
+                    $driver->backupTables(explode(',', $data['tables']));
+                    break;
+                case 'xf': // 修复表
+                    $driver->repair(explode(',', $data['tables']));
+                    break;
+                case 'yh': // 优化表
+                    $driver->optimize(explode(',', $data['tables']));
+                    break;
+            }
             return $this->jsonResponse(200, false);
         }
 

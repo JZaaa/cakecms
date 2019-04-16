@@ -1,4 +1,5 @@
 var $C_RIGHT = $('.zad_container_right')
+var $CONTAINER = $('#zad_container_main')
 var CURRENT_URL = window.location.href.split('#')[0].split('?')[0]
 var $MENU_TREE = $('#zad_menu_tree')
 
@@ -160,6 +161,12 @@ $(document).ready(function() {
     })
   }
 
+  /**
+   * 弹出信息
+   * @param type {string} success|danger|warning|default(默认)
+   * @param message {string} 提示信息
+   * @param actions
+   */
   $.alertmsg = function(type, message, actions) {
     type = type || 'default'
     var icon = undefined
@@ -186,6 +193,11 @@ $(document).ready(function() {
   }
 
 
+  /**
+   * 确认框
+   * @param message {string} 信息
+   * @param callback {function} 回调函数
+   */
   $.confirm = function(message, callback) {
     callback = callback || function(){}
     bootbox.confirm({
@@ -207,9 +219,26 @@ $(document).ready(function() {
     });
   }
 
+  /**
+   * 全屏loading加载提示
+   * @type {{close: jQuery.loading.close, open: jQuery.loading.open}}
+   */
+  $.loading = {
+    open: function() {
+      $CONTAINER.addClass('loading')
+    },
+    close: function() {
+      $CONTAINER.removeClass('loading')
+    }
+  }
+
 }(jQuery))
 
-
+/**
+ * 弹窗，[data-toggle="dialog"]
+ * 对zui.modalTrigger 二次封装，实现添加监听与弹窗内插件实例化
+ * 属性与zad.modalTrigger一致
+ */
 ;(function($) {
   'use strict'
 
@@ -492,9 +521,11 @@ $(document).ready(function() {
       }
     },
     beforeSend: function() {
+      $.loading.open()
       this.element.attr('disabled', true)
     },
     complete: function() {
+      $.loading.close()
       this.element.removeAttr('disabled')
     }
 
