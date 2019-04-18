@@ -1,12 +1,12 @@
-<form action="<?php echo $this->Url->build(['plugin' => 'Admin', 'controller' => 'Menus', 'action' => 'edit', $data->id])?>" method="post" data-toggle="ajaxform" autocomplete="off">
+<form action="<?php echo $this->Url->build(['plugin' => 'Admin', 'controller' => 'Users', 'action' => 'edit', $data->id])?>" method="post" data-toggle="ajaxform" autocomplete="off">
     <input type="hidden" value="<?php echo $data->id?>" name="id">
     <div class="form-group">
-        <label for="name" class="required">用户名</label>
-        <input id="name" name="name" value="<?php echo $data->username?>" type="text" class="form-control" data-rule="required">
+        <label for="username" class="required">用户名</label>
+        <input id="username" name="username" value="<?php echo $data->username?>" type="text" class="form-control" data-rule="required">
     </div>
     <div class="form-group">
-        <label for="nickname">昵称</label>
-        <input type="text" id="nickname" name="nickname" value="<?php echo $data->nickname?>" class="form-control">
+        <label for="nickname" class="required">昵称</label>
+        <input type="text" id="nickname" name="nickname" value="<?php echo $data->nickname?>" class="form-control" data-rule="required">
     </div>
     <div class="row">
         <div class="col-sm-6">

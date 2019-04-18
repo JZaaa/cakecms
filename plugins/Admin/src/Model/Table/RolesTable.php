@@ -38,7 +38,8 @@ class RolesTable extends Table
 
         $this->hasMany('Users', [
             'foreignKey' => 'role_id',
-            'className' => 'Admin.Users'
+            'className' => 'Admin.Users',
+            'dependent' => true
         ]);
     }
 
@@ -56,18 +57,18 @@ class RolesTable extends Table
 
         $validator
             ->scalar('name')
-            ->maxLength('name', 30)
-            ->requirePresence('name', 'create')
-            ->allowEmptyString('name', false);
+            ->maxLength('name', 30, '名称超出长度')
+            ->requirePresence('name', 'create', '名称不能为空')
+            ->allowEmptyString('name', false, '名称不能为空');
 
         $validator
             ->scalar('description')
-            ->maxLength('description', 50)
+            ->maxLength('description', 50, '描述超出长度')
             ->allowEmptyString('description');
 
         $validator
             ->requirePresence('is_super', 'create')
-            ->allowEmptyString('is_super', false);
+            ->allowEmptyString('is_super');
 
         $validator
             ->scalar('role_menu')

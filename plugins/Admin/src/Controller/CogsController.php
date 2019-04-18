@@ -2,6 +2,7 @@
 namespace Admin\Controller;
 
 
+use Cake\Cache\Cache;
 use JZaaa\CakeUtils\Lib\CakeBackup;
 
 class CogsController extends AppController {
@@ -38,13 +39,16 @@ class CogsController extends AppController {
     }
 
 
-    public function test()
-    {
-        $driver = CakeBackup::getInstance();
+    /**
+     * 清除缓存
+     * @return \App\Controller\AppController
+     */
+   public function clearCache()
+   {
+       Cache::clearAll();
+       return $this->jsonResponse(200, false);
+   }
 
-        $a = $driver->getDriver();
-        debug($a);
-        exit;
-    }
+
 
 }

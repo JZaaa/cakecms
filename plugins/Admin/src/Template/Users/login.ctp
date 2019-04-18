@@ -17,11 +17,11 @@
                 <form class="login_form" action="<?php echo $this->Url->build(['plugin' => 'Admin', 'controller' => 'Users', 'action' => 'login'])?>" method="post" autocomplete="off">
                     <div class="form-group">
                         <label for="username">用户名</label>
-                        <input type="text" value="<?php if (isset($username)) echo $username?>" name="username" class="form-control" id="username" placeholder="用户名" required>
+                        <input type="text" value="<?php if (isset($username)) echo $username?>" name="username" class="form-control" id="username" placeholder="用户名" data-rule="required">
                     </div>
                     <div class="form-group">
                         <label for="password">密码</label>
-                        <input type="password" value="<?php if (isset($password)) echo $password?>" name="password" class="form-control" id="password" placeholder="密码" required>
+                        <input type="password" value="<?php if (isset($password)) echo $password?>" name="password" class="form-control" id="password" placeholder="密码" data-rule="required">
                     </div>
                     <div class="form-group">
                         <label for="password">
@@ -44,6 +44,7 @@
 
 <script src="<?php echo $this->Url->webroot('js/jquery.min.js')?>"></script>
 <script src="<?php echo $this->Url->webroot('assets/zui/js/zui.min.js')?>"></script>
+<script src="<?php echo $this->Url->webroot('assets/validator/jquery.validator.min.js?local=zh-CN')?>"></script>
 <script src="<?php echo $this->Url->webroot('js/admin.js')?>"></script>
 </body>
 </html>

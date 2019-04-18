@@ -61,31 +61,31 @@ class UsersTable extends Table
 
         $validator
             ->scalar('username')
-            ->maxLength('username', 30)
-            ->requirePresence('username', 'create')
-            ->allowEmptyString('username', false)
-            ->add('username', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+            ->maxLength('username', 30, '用户名超出长度')
+            ->requirePresence('username', 'create', '用户名不能为空')
+            ->allowEmptyString('username', false, '用户名不能为空')
+            ->add('username', 'unique', ['rule' => 'validateUnique', 'provider' => 'table', 'message' => '用户名重复']);
 
         $validator
             ->scalar('password')
-            ->maxLength('password', 100)
-            ->requirePresence('password', 'create')
-            ->allowEmptyString('password', false);
+            ->maxLength('password', 100, '密码超出长度')
+            ->requirePresence('password', 'create', '密码不能为空')
+            ->allowEmptyString('password', false, '密码不能为空');
 
         $validator
             ->scalar('nickname')
-            ->maxLength('nickname', 30)
-            ->requirePresence('nickname', 'create')
-            ->allowEmptyString('nickname', false);
+            ->maxLength('nickname', 30, '昵称超出长度')
+            ->requirePresence('nickname', 'create', '昵称不能为空')
+            ->allowEmptyString('nickname', false, '昵称不能为空');
 
         $validator
-            ->requirePresence('status', 'create')
-            ->allowEmptyString('status', false);
+            ->requirePresence('status', 'create', '用户状态不能为空')
+            ->allowEmptyString('status', false, '用户状态不能为空');
 
         $validator
             ->nonNegativeInteger('login_count')
-            ->requirePresence('login_count', 'create')
-            ->allowEmptyString('login_count', false);
+            ->requirePresence('login_count', 'create', '登录次数不能为空')
+            ->allowEmptyString('login_count', false, '登录次数不能为空');
 
         $validator
             ->scalar('login_ip')

@@ -241,7 +241,16 @@ $(document).ready(function() {
     }
   }
 
+  /**
+   * @return {undefined}
+   */
+  $.CurrentDialog = function() {
+    return C_DIALOG ? C_DIALOG.$dialog : undefined
+  }
+
+
 }(jQuery))
+
 
 /**
  * 弹窗，[data-toggle="dialog"]
@@ -275,8 +284,6 @@ $(document).ready(function() {
 
     this.dialog = new $.zui.ModalTrigger(options)
 
-    C_DIALOG = this.dialog
-
     this._setUpListener()
   }
 
@@ -292,7 +299,8 @@ $(document).ready(function() {
     var a = this.dialog.show({
       loaded: function(e) {
         $(e.target).trigger(ZAD.eventType.initUI)
-      }
+        C_DIALOG = this.dialog
+      }.bind(this)
     })
   }
 
@@ -368,6 +376,9 @@ $(document).ready(function() {
       if (response.code !== 200) {
         $.alertmsg('danger', message)
       } else {
+        if (response.closeDialog && C_DIALOG) {
+          C_DIALOG.close()
+        }
         if (response.redirect) {
           $.alertmsg('success', message, [{
             name: 'timeout',
@@ -388,6 +399,8 @@ $(document).ready(function() {
           setTimeout(function () {
             window.location.reload()
           }, response.timeout)
+        }else {
+          $.alertmsg('success', message)
         }
       }
     },
@@ -823,6 +836,13 @@ $(document).ready(function() {
     zadFixedUi()
   })
 
+  /**
+   * 跳转
+   */
+  $(document).on('click', '[data-toggle="redirect"]', function(e) {
+    e.preventDefault()
+    window.location.href = $(this).data('url')
+  })
   /**
    * 修改样式
    * 添加size支持

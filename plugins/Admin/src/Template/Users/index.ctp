@@ -1,14 +1,14 @@
+<div class="zad-header">
+    <form autocomplete="off" method="get" class="form-inline">
+        <div class="form-group input-control has-label-left">
+            <input type="text" class="form-control" name="username" value="<?php echo $username?>">
+            <label class="input-control-label-left">用户名:</label>
+        </div>
+        <button type="submit" class="btn btn-info">查询</button>
+        <button type="button" class="btn btn-primary" data-toggle="dialog" data-url="<?php echo $this->Url->build(['plugin' => 'Admin', 'controller' => 'Users', 'action' => 'add'])?>">新增</button>
+    </form>
+</div>
 <div class="zad-content">
-    <div class="zad-header">
-        <form autocomplete="off" method="get" class="form-inline">
-            <div class="form-group input-control has-label-left">
-                <input type="text" class="form-control" name="username" value="<?php echo $username?>">
-                <label class="input-control-label-left">用户名:</label>
-            </div>
-            <button type="submit" class="btn btn-info">查询</button>
-            <button type="button" class="btn btn-primary" data-toggle="dialog" data-url="<?php echo $this->Url->build(['plugin' => 'Admin', 'controller' => 'Users', 'action' => 'add'])?>">新增</button>
-        </form>
-    </div>
     <div>
         <table class="table table-hover table-bordered text-center">
             <thead>
@@ -32,7 +32,7 @@
                 <td><?php echo $item->login_count?></td>
                 <td><?php echo $item->login_ip?></td>
                 <td>
-                    <?php if ($item->role->is_super == 1):?>
+                    <?php if ($item->role->is_super != 1 || $SUPER):?>
                     <button type="button" class="btn btn-info btn-sm" data-toggle="dialog" data-url="<?php echo $this->Url->build(['plugin' => 'Admin', 'controller' => 'Users', 'action' => 'edit', $item->id])?>">编辑</button>
                     <button type="button" class="btn btn-danger btn-sm" data-toggle="doajax" data-url="<?php echo $this->Url->build(['plugin' => 'Admin', 'controller' => 'Users', 'action' => 'delete', $item->id])?>">删除</button>
                     <?php endif;?>

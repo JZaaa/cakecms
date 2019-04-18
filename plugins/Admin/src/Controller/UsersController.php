@@ -58,7 +58,7 @@ class UsersController extends AppController
 
         }
 
-        if ($this->Auth->user()) {
+        if ($this->USER) {
             return $this->redirect($this->Auth->redirectUrl());
         }
 
@@ -120,8 +120,9 @@ class UsersController extends AppController
         if ($this->request->is('post')) {
             $data = $this->Users->newEntity();
             $newData = $this->request->getData();
-
+            $newData['login_count'] = 0;
             $data = $this->Users->patchEntity($data, $newData);
+
 
             if ($this->Users->save($data)) {
                 return $this->jsonResponse(200);
@@ -130,14 +131,14 @@ class UsersController extends AppController
             return $this->getError($data);
         }
 
-        $super = $this->Auth->user('is_super');
+        $super = $this->USER['is_super'];
 
         $roles = TableRegistry::getTableLocator()->get('Admin.Roles')->getList($super);
 
         $status = $this->Users->getStatus();
 
         $this->ajaxView();
-        $this->set(compact('id', 'roles', 'super', 'status', 'data'));
+        $this->set(compact('id', 'roles', 'status', 'data'));
     }
 
     /**
@@ -166,14 +167,13 @@ class UsersController extends AppController
             return $this->getError($data);
         }
 
-        $super = $this->Auth->user('is_super');
-
+        $super = $this->USER['is_super'];
         $roles = TableRegistry::getTableLocator()->get('Admin.Roles')->getList($super);
 
         $status = $this->Users->getStatus();
 
         $this->ajaxView();
-        $this->set(compact('id', 'roles', 'super', 'status', 'data'));
+        $this->set(compact('id', 'roles', 'status', 'data'));
     }
 
     /**
@@ -185,6 +185,19 @@ class UsersController extends AppController
     {
         if ($this->request->is('post')) {
             $data = $this->Users->get($id);
+
+            $role = TableRegistry::getTableLocator()->get('Admin.Roles')->get($data['role_id'], [
+                'fields' => [
+                    'id', 'is_super'
+                ]
+            ]);
+
+            if ($role['is_super'] == 1) {
+                return $this->jsonResponse([
+                    'code' => 300,
+                    'message' => '超级权限用户，无法删除！'
+                ]);
+            }
 
             if ($this->Users->delete($data)) {
                 return $this->jsonResponse(200);

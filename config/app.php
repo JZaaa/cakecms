@@ -391,4 +391,16 @@ return [
         'defaults' => 'cake',
         'timeout' => 6400
     ],
+
+    /**
+     * 开放路由
+     */
+    'routerIgnore' => [
+        'action' => [
+            'Admin.Users.login',
+            'Admin.Users.logout',
+            'Admin.Cogs.clearCache',
+            'Admin.Home.index'
+        ]
+    ]
 ];

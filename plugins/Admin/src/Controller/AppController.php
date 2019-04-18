@@ -11,6 +11,7 @@ use Cake\ORM\TableRegistry;
 class AppController extends BaseController
 {
 
+    public $USER;
     public function initialize()
     {
         parent::initialize();
@@ -41,8 +42,8 @@ class AppController extends BaseController
         } catch (\Exception $e) {
             throw new InternalErrorException($e->getMessage());
         }
+        $this->USER = $this->Auth->user();
 
-        $this->set('USERNAME', $this->Auth->user('username'));
         $this->viewBuilder()->setLayout('admin');
     }
 
@@ -53,6 +54,8 @@ class AppController extends BaseController
      */
     public function beforeRender(Event $event)
     {
+        $this->set('USERNAME', $this->USER['username']);
+        $this->set('SUPER', $this->USER['is_super']);
         // 若为普通后台页面，则获取页面菜单
         if ($this->viewBuilder()->getLayout() == 'admin') {
             $this->getMenusTree();
@@ -65,11 +68,10 @@ class AppController extends BaseController
      */
     private function getMenusTree()
     {
-        $user = $this->Auth->user();
         if (Configure::read('debug')) {
-            $MENUS = TableRegistry::getTableLocator()->get('Admin.Menus')->getMenus($user['role_id']);
+            $MENUS = TableRegistry::getTableLocator()->get('Admin.Menus')->getMenus($this->USER['role_id']);
         } else {
-            $MENUS =$user['menus'];
+            $MENUS =$this->USER['menus'];
         }
 
         $this->set(compact('MENUS'));
@@ -93,9 +95,10 @@ class AppController extends BaseController
      * @param null $message 错误提示
      * @param false|string $redirect 跳转链接, 这里的跳转配合timeout用于前端提示等操作
      * @param int $timeout 跳转等待时间
+     * @param bool $close 是否关闭弹窗
      * @return BaseController
      */
-    public function jsonResponse($code = 200, $refresh = true, $data = [], $message = null, $redirect = false, $timeout = 1000)
+    public function jsonResponse($code = 200, $refresh = true, $data = [], $message = null, $redirect = false, $timeout = 1000, $close = true)
     {
         if (is_array($code)) {
             foreach ($code as $key => $value) {
@@ -124,7 +127,8 @@ class AppController extends BaseController
             'data' => $data,
             'refresh' => $refresh,
             'redirect' => $redirect,
-            'timeout' => $timeout
+            'timeout' => $timeout,
+            'closeDialog' => $close
         ];
         return parent::apiResponse($data);
     }

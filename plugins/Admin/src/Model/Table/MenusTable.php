@@ -154,6 +154,32 @@ class MenusTable extends Table
     }
 
     /**
+     * 获取ztree数据
+     * @param array|string $role_id 被选中的id
+     * @return \Cake\Datasource\ResultSetInterface
+     */
+    public function getZtreeData($role_id = [])
+    {
+        $tree = $this->find()
+            ->select([
+                'id', 'name', 'parent_id'
+            ])
+            ->all();
+
+        if (!empty($role_id)) {
+            if (is_string($role_id)) {
+                $role_id = explode(',', $role_id);
+            }
+            $tree->each(function ($value) use ($role_id) {
+               $value['checked'] = in_array($value->id, $role_id) ? true : false;
+            })->toArray();
+        }
+
+
+        return $tree;
+    }
+
+    /**
      * 菜单树过滤
      * @param array $tree 菜单树
      * @param null $not_id 过滤菜单id及其子菜单

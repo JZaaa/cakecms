@@ -9,8 +9,8 @@
     <link href="<?php echo $this->Url->webroot('assets/zui/lib/bootbox/bootbox.min.css')?>" rel="stylesheet">
     <link href="<?php echo $this->Url->webroot('assets/zui/lib/chosen/chosen.min.css')?>" rel="stylesheet">
     <link href="<?php echo $this->Url->webroot('assets/zui/lib/chosenicons/zui.chosenicons.min.css')?>" rel="stylesheet">
-    <link href="<?php echo $this->Url->webroot('css/admin.css')?>" rel="stylesheet">
     <?php echo $this->fetch('css')?>
+    <link href="<?php echo $this->Url->webroot('css/admin.css')?>" rel="stylesheet">
 </head>
 <body>
 <div id="zad_container_main" class="container zad_container_main load-indicator">
@@ -51,7 +51,10 @@
     <div class="zad_container_right">
         <div class="zad_top_nav">
             <ul class="nav navbar-nav navbar-right">
-                <li class="">
+                <li>
+                    <a href="javascript:;" style="color: #ea644a" data-toggle="doajax" data-url="<?php echo $this->Url->build(['plugin' => 'Admin', 'controller' => 'Cogs', 'action' => 'clearCache'])?>">清除缓存</a>
+                </li>
+                <li>
                     <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                         <?php echo $USERNAME?>
                         <span class="icon icon-angle-down"></span>
