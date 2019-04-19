@@ -56,7 +56,7 @@ class AppController extends BaseController
      */
     public function beforeRender(Event $event)
     {
-        $this->set('USERNAME', $this->USER['username']);
+        $this->set('USERNAME', $this->USER['nickname']);
         $this->set('SUPER', $this->USER['is_super']);
         // 若为普通后台页面，则获取页面菜单
         if ($this->viewBuilder()->getLayout() == 'admin') {

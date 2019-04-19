@@ -1,4 +1,9 @@
 <div class="zad-content">
+    <div class="alert">
+        <div class="content">
+            当前登录用户：<code><?php echo $user['username'] , ' ', $user['nickname']?></code>，登录时间：<code><?php echo $user['modified']?></code>，登录IP：<code><?php echo $user['login_ip']?></code>，累计登录<code><?php echo $user['login_count']?></code>次
+        </div>
+    </div>
     <div class="row">
         <div class="col-sm-12">
             <div class="panel">

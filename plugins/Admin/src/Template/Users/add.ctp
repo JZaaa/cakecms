@@ -5,7 +5,11 @@
     </div>
     <div class="form-group">
         <label for="password" class="required">密码</label>
-        <input id="password" name="password" value="" type="password" class="form-control" data-rule="required">
+        <input id="password" name="password" value="" type="password" class="form-control" data-rule="密码:required">
+    </div>
+    <div class="form-group">
+        <label for="repassword" class="required">确认密码</label>
+        <input id="repassword" name="confirmPwd" value="" type="password" class="form-control" data-rule="确认密码:match(password)">
     </div>
     <div class="form-group">
         <label for="nickname" class="required">昵称</label>
