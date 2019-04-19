@@ -60,6 +60,7 @@
                         <span class="icon icon-angle-down"></span>
                     </a>
                     <ul class="dropdown-menu pull-right text-center">
+                        <li><a data-toggle="dialog" data-url="<?php echo $this->Url->build(['plugin' => 'Admin', 'controller' => 'Users', 'action' => 'info'])?>">资料修改</a></li>
                         <li><a href="<?php echo $this->Url->build(['plugin' => 'Admin', 'controller' => 'Users', 'action' => 'logout'])?>">退出登录</a></li>
                     </ul>
                 </li>

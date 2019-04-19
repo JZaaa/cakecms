@@ -398,6 +398,7 @@ return [
      */
     'whiteRouter' => [
         'Admin.Users.logout',
+        'Admin.Users.info',
         'Admin.Cogs.clearCache',
         'Admin.Home.index'
     ]

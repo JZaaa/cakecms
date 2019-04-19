@@ -17,6 +17,9 @@ class HomeController extends AppController
     public function index()
     {
         $this->serverEnv();
+
+        $user = $this->USER;
+        $this->set(compact('user'));
     }
 
 

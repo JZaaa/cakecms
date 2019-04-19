@@ -155,9 +155,13 @@ class UsersController extends AppController
 
             $newData = $this->request->getData();
 
+            if (empty($newData['password'])) {
+                unset($newData['password']);
+            }
+
             $data = $this->Users->patchEntity($data, $newData, [
                 'fields' => [
-                    'username', 'nickname', 'status'
+                    'username', 'nickname', 'status', 'password', 'role_id'
                 ]
             ]);
 
@@ -208,6 +212,44 @@ class UsersController extends AppController
         return $this->jsonResponse(300);
     }
 
+
+    /**
+     * 用户信息修改
+     * @return \App\Controller\AppController
+     */
+    public function info()
+    {
+        $id = $this->USER['id'];
+        $data = $this->Users->get($id);
+
+        if ($this->request->is('post')) {
+
+            $newData = $this->request->getData();
+
+
+            if (empty($newData['password'])) {
+                unset($newData['password']);
+            }
+
+            $data = $this->Users->patchEntity($data, $newData, [
+                'fields' => [
+                    'username', 'nickname', 'password'
+                ]
+            ]);
+
+            if ($this->Users->save($data)) {
+                return $this->jsonResponse(200);
+            }
+
+            return $this->getError($data);
+        }
+
+
+        $this->ajaxView();
+
+        $this->set(compact('data'));
+
+    }
 
 
 }
