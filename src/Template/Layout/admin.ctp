@@ -59,7 +59,7 @@
                         <?php echo $USERNAME?>
                         <span class="icon icon-angle-down"></span>
                     </a>
-                    <ul class="dropdown-menu pull-right">
+                    <ul class="dropdown-menu pull-right text-center">
                         <li><a href="<?php echo $this->Url->build(['plugin' => 'Admin', 'controller' => 'Users', 'action' => 'logout'])?>">退出登录</a></li>
                     </ul>
                 </li>
@@ -67,11 +67,6 @@
         </div>
         <div class="zad_body">
             <?php echo $this->fetch('content') ?>
-        </div>
-        <div class="zad_footer">
-            <div>
-                JZaaa - CakeCMS
-            </div>
         </div>
     </div>
 

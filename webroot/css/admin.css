@@ -183,8 +183,10 @@ a:focus {
   left: 0;
   right: 0;
   height: 57px;
-  background: #EDEDED;
-  border-bottom: 1px solid #D9DEE4;
+  background: #fff;
+  border-bottom: 1px solid #d8dce5;
+  -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 0 3px 0 rgba(0, 0, 0, 0.04);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 0 3px 0 rgba(0, 0, 0, 0.04);
 }
 .zad_container_main .zad_container_right .zad_top_nav .breadcrumb {
   margin: 0;
@@ -214,7 +216,7 @@ a:focus {
   left: 0;
   right: 0;
   top: 57px;
-  bottom: 50px;
+  bottom: 0px;
   overflow: auto;
 }
 .zad_container_main .zad_footer {
@@ -223,8 +225,8 @@ a:focus {
   left: 0;
   right: 0;
   bottom: 0;
-  height: 50px;
-  line-height: 50px;
+  height: 0px;
+  line-height: 0px;
   text-align: center;
   background-color: #F7F7F7;
 }
