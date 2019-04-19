@@ -43,7 +43,6 @@ class RoutersController extends AppController
     public function add()
     {
         if ($this->request->is('post')) {
-            $data = $this->Routers->newEntity();
             $newData = $this->request->getData();
 
             if (!empty($newData['parent_id'])) {
@@ -58,10 +57,16 @@ class RoutersController extends AppController
                 $newData['level'] = 1;
             }
 
-            $data = $this->Routers->patchEntity($data, $newData);
+            if (!empty($newData['init']) && $newData['level'] == 3) {
+                return $this->initRouter($newData);
 
-            if ($this->Routers->save($data)) {
-                return $this->jsonResponse(200);
+            } else {
+                $data = $this->Routers->newEntity();
+                $data = $this->Routers->patchEntity($data, $newData);
+
+                if ($this->Routers->save($data)) {
+                    return $this->jsonResponse(200);
+                }
             }
 
             return $this->getError($data);
@@ -73,6 +78,56 @@ class RoutersController extends AppController
 
         $this->set(compact('parents'));
 
+    }
+
+    /**
+     * 生成路由脚手架
+     * @param $data
+     * @return \App\Controller\AppController
+     */
+    private function initRouter($data)
+    {
+        $array = [
+            [
+                'router' => 'index',
+                'name' => '浏览',
+                'sort' => 90
+            ],
+            [
+                'router' => 'add',
+                'name' => '新增',
+                'sort' => 80
+            ],
+            [
+                'router' => 'edit',
+                'name' => '编辑',
+                'sort' => 70
+            ],
+            [
+                'router' => 'delete',
+                'name' => '删除',
+                'sort' => 60
+            ]
+        ];
+
+        $newData = [];
+
+        foreach ($array as $item) {
+            $item['parent_id'] = $data['parent_id'];
+            $item['level'] = 3;
+            $item['router'] = $data['router'] . '.' . $item['router'];
+            $newData[] = $item;
+        }
+
+        $newData = $this->Routers->newEntities($newData);
+
+        try {
+            $res = $this->Routers->saveMany($newData);
+        } catch (\Exception $e) {
+            $res = false;
+        }
+
+        return $res ? $this->jsonResponse(200) : $this->jsonResponse(300);
     }
 
 
@@ -141,9 +196,10 @@ class RoutersController extends AppController
 
     /**
      * 重新生成路由
+     * @deprecated 现在手动维护路由表
      * @return \App\Controller\AppController
      */
-    public function reset()
+    private function reset()
     {
         $sql = $this->Routers->getSchema()->truncateSql($this->Routers->getConnection());
 
@@ -158,9 +214,10 @@ class RoutersController extends AppController
     /**
      * 生成路由
      * 仅增加新路由，原路由需要自己维护
+     * @deprecated 现在手动维护路由表
      * @return \App\Controller\AppController
      */
-    public function load()
+    private function load()
     {
 
         $pluginName = 'Admin'; // 生成Admin路由
@@ -267,7 +324,6 @@ class RoutersController extends AppController
         return $this->jsonResponse(200);
 
     }
-
 
     /**
      * 获取Controllers

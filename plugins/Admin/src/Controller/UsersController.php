@@ -31,7 +31,7 @@ class UsersController extends AppController
                 $user = $this->Auth->identify();
                 if ($user && $user['status'] == 1) {
                     // menus写入
-                    $menus = TableRegistry::getTableLocator()->get('Admin.Menus')->getMenus($user['role_id'], true);
+                    $menus = TableRegistry::getTableLocator()->get('Admin.Menus')->getMenus($user['role_id']);
 
                     $data = $this->Users->get($user['id']);
                     $data = $this->Users->patchEntity($data, [
@@ -42,6 +42,7 @@ class UsersController extends AppController
                     $this->Users->save($data);
 
                     $user['menus'] = $menus['menus'];
+                    $user['router'] = $menus['router'];
                     $user['is_super'] = $menus['super'];
                     $this->Auth->setUser($user);
                     return $this->redirect($this->Auth->redirectUrl());

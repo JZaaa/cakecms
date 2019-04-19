@@ -3,9 +3,9 @@
 namespace Admin\Controller;
 
 use App\Controller\AppController as BaseController;
-use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Http\Exception\InternalErrorException;
+use Cake\Http\Exception\UnauthorizedException;
 use Cake\ORM\TableRegistry;
 
 class AppController extends BaseController
@@ -44,6 +44,8 @@ class AppController extends BaseController
         }
         $this->USER = $this->Auth->user();
 
+        $this->checkAuth();
+
         $this->viewBuilder()->setLayout('admin');
     }
 
@@ -64,18 +66,31 @@ class AppController extends BaseController
 
     /**
      * 获取页面菜单
-     * debug打开时，动态获取，否则session获取，修改权限时需重新登录
+     * 修改权限时需重新登录
      */
     private function getMenusTree()
     {
-        if (Configure::read('debug')) {
-            $MENUS = TableRegistry::getTableLocator()->get('Admin.Menus')->getMenus($this->USER['role_id']);
-        } else {
-            $MENUS =$this->USER['menus'];
-        }
+        $MENUS =$this->USER['menus'];
 
         $this->set(compact('MENUS'));
     }
+
+    /**
+     * 权限验证，不通过抛出403错误
+     */
+    private function checkAuth()
+    {
+        if (!empty($this->USER)) {
+            $router = $this->USER['router'];
+            $params = $this->request->getAttributes()['params'];
+
+            if (!$this->USER['is_super'] && !in_array($params['plugin'] . '.' . $params['controller'] . '.' . $params['action'], $router)) {
+                throw new UnauthorizedException('无权限访问', 403);
+            }
+        }
+
+    }
+
 
 
     /**

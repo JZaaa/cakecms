@@ -70,14 +70,6 @@ class RolesTable extends Table
             ->requirePresence('is_super', 'create')
             ->allowEmptyString('is_super');
 
-        $validator
-            ->scalar('role_menu')
-            ->allowEmptyString('role_menu');
-
-        $validator
-            ->scalar('role_auth')
-            ->allowEmptyString('role_auth');
-
         return $validator;
     }
 

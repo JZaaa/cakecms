@@ -393,14 +393,12 @@ return [
     ],
 
     /**
-     * 开放路由
+     * 路由白名单
+     * 非登录状态无需添加值白名单中
      */
-    'routerIgnore' => [
-        'action' => [
-            'Admin.Users.login',
-            'Admin.Users.logout',
-            'Admin.Cogs.clearCache',
-            'Admin.Home.index'
-        ]
+    'whiteRouter' => [
+        'Admin.Users.logout',
+        'Admin.Cogs.clearCache',
+        'Admin.Home.index'
     ]
 ];

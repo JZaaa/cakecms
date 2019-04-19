@@ -210,51 +210,72 @@ class MenusTable extends Table
      * @param bool $collection 聚合功能，返回Menus，与是否为超级权限
      * @return array
      */
-    public function getMenus($role_id = null, $collection = false)
+    public function getMenus($role_id = null)
     {
         $menus = [];
+        $router = [];
 
         $super = false;
 
 
         if (!empty($role_id)) {
-            $conditions = [];
 
             $roleMenu = TableRegistry::getTableLocator()->get('Admin.Roles')->getData(array('Roles.id' => $role_id));
 
             // 超级管理员权限
             if ($roleMenu['is_super'] != 1) {
-                $menus_ids = explode(',', $roleMenu->role_menu);
+                $router = TableRegistry::getTableLocator()->get('Admin.RoleRouters')->find('list', [
+                    'keyField' => 'id',
+                    'valueField' => 'router'
+                ])
+                    ->where([
+                        'role_id' => $role_id
+                    ])
+                    ->toList();
 
-                $conditions['id in'] = $menus_ids;
+                $whiteRouter = Configure::read('whiteRouter');
+
+                $router = array_merge($router, $whiteRouter);
+
             } else {
                 $super = true;
+                $router = true;
             }
 
-
+            debug($router);
             // 生成菜单树
             $menus = $this->find()
-                ->where($conditions)
                 ->order([
                     'sort' => 'desc',
                     'id' => 'desc'
                 ])
-                ->reject(function ($item) {
-                    // 删除隐藏菜单
-                    return $item->is_show != 1;
+                ->reject(function ($item) use ($router) {
+                    // 删除隐藏菜单和无权限菜单
+                    $return = ($item->is_show != 1);
+                    if (is_array($router) && !empty($item['action'])) {
+                        $return = ($return || !in_array($item['plugin']. '.' . $item['controller'] . '.' .$item['action'], $router));
+                    }
+                    return $return;
                 })
                 ->nest('id', 'parent_id')// 生成树
                 ->filter(function ($item) {
-                    // 返回包含根菜单的新数组
-                    return $item->parent_id == 0;
+//                    // 返回包含根菜单的新数组
+                    if ($item->parent_id == 0) {
+                        if (empty($item['action']) && empty($item['children'])) {
+                            return false;
+                        }
+                        return true;
+                    }
+                    return false;
                 })
                 ->toArray();
         }
 
-        return $collection ? [
+        return [
             'menus' => $menus,
-            'super' => $super
-        ] : $menus;
+            'super' => $super,
+            'router' => $router
+        ];
 
     }
 

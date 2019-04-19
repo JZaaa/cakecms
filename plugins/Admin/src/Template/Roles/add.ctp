@@ -1,6 +1,3 @@
-<div class="zad-header">
-    <a class="btn btn-link" href="<?php echo $this->Url->build(['plugin' => 'Admin', 'controller' => 'Roles', 'action' => 'index'])?>">返回</a>
-</div>
 <div class="zad-content">
     <form action="<?php echo $this->Url->build(['plugin' => 'Admin', 'controller' => 'Roles', 'action' => 'add'])?>" method="post" data-toggle="ajaxform" autocomplete="off">
         <div class="form-group">
@@ -14,8 +11,14 @@
         <h2>角色权限</h2>
         <?php foreach ($routers as $plugin):?>
             <fieldset>
-                <legend class="small"><?php echo !empty($plugin->name) ? $plugin->name : $plugin->router?></legend>
-                <table class="table table-bordered ">
+                <table class="table table-bordered table-condensed">
+                    <thead>
+                    <tr>
+                        <th colspan="2">
+                            <?php echo !empty($plugin->name) ? $plugin->name : $plugin->router?>
+                        </th>
+                    </tr>
+                    </thead>
                     <?php foreach ($plugin->children as $controller):
                         if (empty($controller->children)) {
                             continue;
@@ -38,6 +41,7 @@
             </fieldset>
         <?php endforeach;?>
         <div class="form-group text-right">
+            <a class="btn" href="<?php echo $this->Url->build(['plugin' => 'Admin', 'controller' => 'Roles', 'action' => 'index'])?>">取消</a>
             <button type="submit" class="btn btn-info">提交</button>
         </div>
     </form>

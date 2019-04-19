@@ -20,6 +20,13 @@
         <label for="sort">排序</label>
         <input id="sort" name="sort" value="0" type="text" class="form-control" data-rule="required;integer(+0)">
     </div>
+    <div class="form-group">
+        <div class="label label-danger">初始化仅三级路由有效，请设置为 Plugin.Admin 方式 ,会自动生成基础路由</div>
+    </div>
+    <div class="form-group checkbox-primary">
+        <input type="checkbox" id="init" name="init" value="1">
+        <label for="init">初始化</label>
+    </div>
     <div class="form-group text-right">
         <button type="submit" class="btn btn-info">提交</button>
     </div>

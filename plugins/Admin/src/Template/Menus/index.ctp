@@ -1,5 +1,12 @@
 <div class="zad-header">
-    <button class="btn btn-primary" type="button" data-remote="<?php echo $this->Url->build(['plugin' => 'Admin', 'controller' => 'Menus', 'action' => 'add'])?>" data-toggle="dialog">新增</button>
+    <?php echo $this->Util->getBtn(
+        [
+            'name' => '新增',
+            'class' => 'btn-primary',
+            'url' => ['plugin' => 'Admin', 'controller' => 'Menus', 'action' => 'add'],
+            'toggle' => 'dialog'
+        ]
+    )?>
 </div>
 <div class="zad-content">
     <table class="table table-hover table-bordered">
@@ -30,13 +37,26 @@
                     ?>
                 </td>
                 <td>
-                    <?php if ($item->is_root != 1):?>
-                    <button class="btn btn-primary btn-sm" type="button" data-remote="<?php echo $this->Url->build(['plugin' => 'Admin', 'controller' => 'Menus', 'action' => 'edit', $item->id])?>" data-toggle="dialog">编辑</button>
-                    <button class="btn btn-primary btn-sm" type="button" data-url="<?php echo $this->Url->build(['plugin' => 'Admin', 'controller' => 'Menus', 'action' => 'delete', $item->id])?>" data-toggle="doajax">删除</button>
-                    <?php endif;?>
+                    <?php if ($item->is_root != 1) {
+                        echo $this->Util->getBtn(
+                            [
+                                'name' => '编辑',
+                                'class' => 'btn-primary btn-sm',
+                                'url' => ['plugin' => 'Admin', 'controller' => 'Menus', 'action' => 'edit', $item->id],
+                                'toggle' => 'dialog'
+                            ],
+                            [
+                                'name' => '删除',
+                                'class' => 'btn-danger btn-sm',
+                                'url' => ['plugin' => 'Admin', 'controller' => 'Menus', 'action' => 'delete', $item->id],
+                                'toggle' => 'doajax'
+                            ]
+                        );
+                    }
+                    ?>
                 </td>
             </tr>
-            <?php endforeach;?>
+        <?php endforeach;?>
         </tbody>
     </table>
 </div>

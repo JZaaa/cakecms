@@ -1,7 +1,7 @@
 /*
 MySQL Database SQL Dump
 数据库：cakecms
-生成日期：2019-04-18 16:55:39
+生成日期：2019-04-19 12:36:18
 *********************************************************************
 */
 
@@ -60,7 +60,17 @@ CREATE TABLE `role_routers` (
   `router` varchar(50) NOT NULL COMMENT '路由地址',
   PRIMARY KEY (`id`),
   KEY `role_id_index` (`role_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+
+/*Data for the table `role_routers` */
+
+insert into `role_routers` (id,role_id,router) values
+('7','2','Admin.Routers.delete'),
+('5','2','Admin.Routers.index'),
+('8','2','Admin.Home.serverEnv'),
+('9','2','Admin.Cogs.database'),
+('10','2','Admin.Roles.index'),
+('11','2','Admin.Roles.add');
 
 /*Table structure for table `roles` */
 
@@ -71,16 +81,14 @@ CREATE TABLE `roles` (
   `name` varchar(30) NOT NULL COMMENT '用户组名称',
   `description` varchar(50) DEFAULT NULL COMMENT '用户组描述',
   `is_super` tinyint(2) NOT NULL DEFAULT '2' COMMENT '超级权限，1:是，不可删除，拥有所有权限',
-  `role_menu` text COMMENT '可见菜单id集合',
-  `role_auth` text COMMENT '按钮权限id集合',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `roles` */
 
-insert into `roles` (id,name,description,is_super,role_menu,role_auth) values
-('1','超级管理员','超级管理员','1','',''),
-('2','测试组','测试组','2','1,2,4,5','');
+insert into `roles` (id,name,description,is_super) values
+('1','超级管理员','超级管理员','1'),
+('2','测试组','测试组','2');
 
 /*Table structure for table `routers` */
 
@@ -95,40 +103,35 @@ CREATE TABLE `routers` (
   `sort` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique` (`router`)
-) ENGINE=MyISAM AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 
 /*Data for the table `routers` */
 
 insert into `routers` (id,parent_id,level,name,router,sort) values
-('1','0','1','基础模块','Admin','0'),
-('2','1','2','其他','Cogs','0'),
-('3','1','2','公共','Home','0'),
-('4','1','2','菜单管理','Menus','0'),
-('5','1','2','','RoleRouters','0'),
-('6','1','2','角色权限','Roles','0'),
-('7','1','2','路由管理','Routers','0'),
-('8','1','2','系统用户','Users','0'),
-('9','2','3','数据库备份','Admin.Cogs.database','0'),
-('10','3','3','服务器信息','Admin.Home.serverEnv','0'),
-('11','4','3','浏览','Admin.Menus.index','5'),
-('12','4','3','新增','Admin.Menus.add','4'),
-('13','4','3','编辑','Admin.Menus.edit','3'),
-('14','4','3','删除','Admin.Menus.delete','2'),
-('15','6','3','浏览','Admin.Roles.index','5'),
-('16','6','3','新增','Admin.Roles.add','4'),
-('17','6','3','编辑','Admin.Roles.edit','3'),
-('18','6','3','删除','Admin.Roles.delete','2'),
-('19','6','3','','Admin.Roles.menu','0'),
-('20','7','3','浏览','Admin.Routers.index','5'),
-('21','7','3','新增','Admin.Routers.add','4'),
-('22','7','3','编辑','Admin.Routers.edit','3'),
-('23','7','3','删除','Admin.Routers.delete','2'),
-('24','7','3','初始化','Admin.Routers.reset','0'),
-('25','7','3','自动加载','Admin.Routers.load','0'),
-('26','8','3','浏览','Admin.Users.index','5'),
-('27','8','3','新增','Admin.Users.add','4'),
-('28','8','3','编辑','Admin.Users.edit','3'),
-('29','8','3','删除','Admin.Users.delete','2');
+('1','0','1','系统管理','Admin.Cog','0'),
+('2','1','2','路由管理','Admin.Routers','90'),
+('3','2','3','浏览','Admin.Routers.index','90'),
+('4','2','3','新增','Admin.Routers.add','80'),
+('5','2','3','编辑','Admin.Routers.edit','70'),
+('6','2','3','删除','Admin.Routers.delete','60'),
+('7','1','2','系统角色','Admin.Roles','80'),
+('8','7','3','浏览','Admin.Roles.index','90'),
+('9','7','3','新增','Admin.Roles.add','80'),
+('10','7','3','编辑','Admin.Roles.edit','70'),
+('11','7','3','删除','Admin.Roles.delete','60'),
+('12','1','2','系统用户','Admin.Users','70'),
+('13','12','3','浏览','Admin.Users.index','90'),
+('14','12','3','新增','Admin.Users.add','80'),
+('15','12','3','编辑','Admin.Users.edit','70'),
+('16','12','3','删除','Admin.Users.delete','60'),
+('17','1','2','其他','Admin.Other','0'),
+('18','17','3','数据库管理','Admin.Cogs.database','0'),
+('19','17','3','服务器信息','Admin.Home.serverEnv','0'),
+('20','1','2','菜单管理','Admin.Menus','60'),
+('21','20','3','浏览','Admin.Menus.index','90'),
+('22','20','3','新增','Admin.Menus.add','80'),
+('23','20','3','编辑','Admin.Menus.edit','70'),
+('24','20','3','删除','Admin.Menus.delete','60');
 
 /*Table structure for table `users` */
 
@@ -152,8 +155,8 @@ CREATE TABLE `users` (
 /*Data for the table `users` */
 
 insert into `users` (id,role_id,username,password,nickname,status,login_count,login_ip,created,modified) values
-('1','1','admin','$2y$10$HGHnQVGnUvLqKfOF3Yg0kuiV2XwMkp9OlzAlxdYc69sKoS.e.EgDG','超级管理员','1','9','::1','2019-04-04 14:01:29','2019-04-18 13:17:03'),
-('2','2','test','$2y$10$KO7PetLfGt/6uxu91tjA0OVOyfnl1fKKfVwS7otxxn2wXMQSKkSnm','测试员','1','2','::1','2019-04-17 14:13:45','2019-04-17 14:15:18');
+('1','1','admin','$2y$10$HGHnQVGnUvLqKfOF3Yg0kuiV2XwMkp9OlzAlxdYc69sKoS.e.EgDG','超级管理员','1','15','::1','2019-04-04 14:01:29','2019-04-19 12:35:55'),
+('2','2','test','$2y$10$KO7PetLfGt/6uxu91tjA0OVOyfnl1fKKfVwS7otxxn2wXMQSKkSnm','测试员','1','10','::1','2019-04-17 14:13:45','2019-04-19 12:10:46');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

@@ -15,13 +15,6 @@ use Cake\Routing\Router;
 class RolesController extends AppController
 {
 
-    public function test()
-    {
-        $routers = TableRegistry::getTableLocator()->get('Admin.Routers')->getAllTree();
-
-        debug($routers);
-        exit;
-    }
 
     public function index()
     {
@@ -58,7 +51,8 @@ class RolesController extends AppController
                 ]
             ]);
 
-            if ($this->Roles->save($data)) {
+            if ($res = $this->Roles->save($data)) {
+                TableRegistry::getTableLocator()->get('Admin.RoleRouters')->updateRoleRouter($res['id'], $this->request->getData('role_router'));
                 return $this->jsonResponse([
                     'code' => 200,
                     'refresh' => false,
@@ -87,6 +81,8 @@ class RolesController extends AppController
 
         if ($this->request->is('post')) {
             $newData = $this->request->getData();
+            TableRegistry::getTableLocator()->get('Admin.RoleRouters')->updateRoleRouter($id, $this->request->getData('role_router'));
+
 
             $data = $this->Roles->patchEntity($data, $newData, [
                 'fields' => [
@@ -142,38 +138,4 @@ class RolesController extends AppController
     }
 
 
-    /**
-     * 菜单权限
-     * @param null $id
-     * @return \App\Controller\AppController
-     */
-    public function menu($id = null)
-    {
-        $data = $this->Roles->get($id);
-
-        if ($this->request->is('post')) {
-            $data = $this->Roles->get($id);
-            $newData = $this->request->getData();
-
-            $data = $this->Roles->patchEntity($data, $newData, [
-                'fields' => [
-                    'role_menu'
-                ]
-            ]);
-
-            if ($this->Roles->save($data)) {
-                return $this->jsonResponse(200, false);
-            }
-
-            return $this->getError($data);
-        }
-
-        $this->ajaxView();
-
-        $menus = TableRegistry::getTableLocator()->get('Admin.Menus')->getZtreeData($data['role_menu']);
-
-
-
-        $this->set(compact('data', 'menus', 'id'));
-    }
 }

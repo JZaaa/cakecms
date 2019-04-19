@@ -77,4 +77,58 @@ class RoleRoutersTable extends Table
 
         return $rules;
     }
+
+    /**
+     * 更新权限表
+     * @param $role_id
+     * @param array $routers
+     * @return bool
+     * @throws \Exception
+     */
+    public function updateRoleRouter($role_id, $routers = [])
+    {
+
+        if (!is_array($routers)) {
+            $routers = [];
+        }
+
+        $data = $this->find('list', [
+            'keyField' => 'id',
+            'valueField' => 'router'
+        ])
+            ->where([
+                'role_id' => $role_id
+            ])
+            ->toArray();
+
+        $delete = array_diff($data, $routers);
+
+        $add = array_diff($routers, $data);
+
+
+        if (!empty($delete)) {
+            $this->deleteAll([
+                'id in' => array_keys($delete)
+            ]);
+        }
+
+        if (!empty($add)) {
+            $newData = [];
+
+            foreach ($add as $item) {
+                $newData[] = [
+                    'role_id' => $role_id,
+                    'router' => $item
+                ];
+            }
+
+            $newData = $this->newEntities($newData);
+
+            $this->saveMany($newData);
+
+        }
+
+        return true;
+
+    }
 }

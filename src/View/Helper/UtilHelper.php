@@ -52,23 +52,29 @@ class UtilHelper extends Helper
 
         $user = $this->_View->getRequest()->getSession()->read('Admin.User');
 
-        if (!$user['is_super']) {
-            // 非超级权限，过滤
-        }
-
         $btn = '';
         for ($i = 0; $i < $count; $i++) {
             $item = $options[$i];
+            $url = isset($item['url']) ? $item['url'] : null;
+
+            if (!$user['is_super'] && !in_array($url['plugin']. '.' . $url['controller'] . '.' .$url['action'], $user['router'])) {
+                // 非超级权限，过滤
+                continue;
+            }
 
             $data = '';
             if (isset($item['toggle']) && !isset($item['data']['toggle'])) {
                 $data .= ' data-toggle="' . $item['toggle'] . '" ';
             }
-            foreach ($item['data'] as $key => $value) {
-                $data .= ' data-' . $key . '="' . $value . '" ';
+
+            if (isset($item['data'])) {
+                foreach ($item['data'] as $key => $value) {
+                    $data .= ' data-' . $key . '="' . $value . '" ';
+                }
             }
 
-            $data .= ' data-url="' . $this->Url->build($item['url']) . '" ';
+
+            $data .= ' data-url="' . $this->Url->build($url) . '" ';
 
             $class = isset($item['class']) ? $item['class'] : 'btn-default';
 

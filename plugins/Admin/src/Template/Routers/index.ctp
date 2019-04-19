@@ -5,18 +5,6 @@
             'class' => 'btn-primary',
             'url' => ['plugin' => 'Admin', 'controller' => 'Routers', 'action' => 'add'],
             'toggle' => 'dialog'
-        ],
-        [
-            'name' => '自动加载',
-            'class' => 'btn-danger',
-            'url' => ['plugin' => 'Admin', 'controller' => 'Routers', 'action' => 'load'],
-            'toggle' => 'doajax'
-        ],
-        [
-            'name' => '初始化',
-            'class' => 'btn-danger',
-            'url' => ['plugin' => 'Admin', 'controller' => 'Routers', 'action' => 'reset'],
-            'toggle' => 'doajax'
         ]
     )?>
 </div>

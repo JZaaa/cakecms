@@ -153,8 +153,6 @@ $(document).ready(function() {
       error: function(xhr, ajaxOptions, thrownError) {
         if (opt.error) {
           opt.error(xhr, ajaxOptions, thrownError)
-        } else {
-          $.alertmsg('default', '接口请求失败！')
         }
       },
       beforeSend: function() {
@@ -165,6 +163,14 @@ $(document).ready(function() {
       complete: function() {
         if (opt.complete) {
           opt.complete()
+        }
+      },
+      statusCode: {
+        403: function() {
+          $.alertmsg('default', '无权限访问！')
+        },
+        500: function() {
+          $.alertmsg('default', '接口请求失败！')
         }
       }
     })

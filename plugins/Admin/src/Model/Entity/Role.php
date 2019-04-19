@@ -30,8 +30,6 @@ class Role extends Entity
         'name' => true,
         'description' => true,
         'is_super' => true,
-        'role_menu' => true,
-        'role_auth' => true,
         'users' => true
     ];
 }

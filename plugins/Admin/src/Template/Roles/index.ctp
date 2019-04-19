@@ -8,7 +8,14 @@
                 <label class="input-control-label-left">角色名称:</label>
             </div>
             <button type="submit" class="btn btn-info">查询</button>
-            <button type="button" class="btn btn-primary" data-toggle="redirect" data-url="<?php echo $this->Url->build(['plugin' => 'Admin', 'controller' => 'Roles', 'action' => 'add'])?>">新增</button>
+            <?php echo $this->Util->getBtn(
+                [
+                    'name' => '新增',
+                    'class' => 'btn-primary',
+                    'url' => ['plugin' => 'Admin', 'controller' => 'Roles', 'action' => 'add'],
+                    'toggle' => 'redirect'
+                ]
+            )?>
         </form>
     </div>
 <div class="zad-content">
@@ -29,11 +36,24 @@
                     <td><?php echo ($item->is_super == 1) ? '是' : '否'?></td>
                     <td>
                         <?php if ($item->is_super != 1 || $SUPER):?>
-                            <button type="button" class="btn btn-info btn-sm" data-toggle="redirect" data-url="<?php echo $this->Url->build(['plugin' => 'Admin', 'controller' => 'Roles', 'action' => 'edit', $item->id])?>">编辑</button>
+                            <?php echo $this->Util->getBtn(
+                                [
+                                    'name' => '编辑',
+                                    'class' => ' btn-info btn-sm',
+                                    'url' => ['plugin' => 'Admin', 'controller' => 'Roles', 'action' => 'edit', $item->id],
+                                    'toggle' => 'redirect'
+                                ]
+                            )?>
                         <?php endif;?>
                         <?php if ($item->is_super != 1):?>
-                            <button type="button" class="btn btn-primary btn-sm" data-toggle="dialog" data-url="<?php echo $this->Url->build(['plugin' => 'Admin', 'controller' => 'Roles', 'action' => 'menu', $item->id])?>">菜单权限</button>
-                            <button type="button" class="btn btn-danger btn-sm" data-toggle="doajax" data-url="<?php echo $this->Url->build(['plugin' => 'Admin', 'controller' => 'Roles', 'action' => 'delete', $item->id])?>">删除</button>
+                            <?php echo $this->Util->getBtn(
+                                [
+                                    'name' => '删除',
+                                    'class' => 'btn-danger btn-sm',
+                                    'url' => ['plugin' => 'Admin', 'controller' => 'Roles', 'action' => 'delete', $item->id],
+                                    'toggle' => 'doajax'
+                                ]
+                            )?>
                         <?php endif;?>
                     </td>
                 </tr>
