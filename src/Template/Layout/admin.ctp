@@ -17,7 +17,7 @@
     <div class="zad_container_left">
         <a class="logo" href="<?php echo $this->Url->build(['plugin' => 'Admin', 'controller' => 'Home', 'action' => 'index'])?>">CakeCMS</a>
         <nav class="menu zad_menu" data-ride="menu">
-            <ul id="zad_menu_tree" class="tree tree-menu" data-ride="tree" data-animate="true">
+            <ul id="zad_menu_tree" class="tree tree-menu" data-ride="tree" data-animate="true" data-active-url="<?php echo $CURL?>">
                 <?php foreach ($MENUS as $item):
                     if (!empty($item->controller) && !empty($item->action)) {
                         $url =  $this->Url->build(['plugin' => $item->plugin, 'controller' => $item->controller, 'action' => $item->action], true);

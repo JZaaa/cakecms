@@ -40,6 +40,8 @@ class RolesController extends AppController
      */
     public function add()
     {
+        $url = Router::url(['plugin' => 'Admin', 'controller' => 'Roles', 'action' => 'index'], true);
+
         if ($this->request->is('post')) {
             $data = $this->Roles->newEntity();
             $newData = $this->request->getData();
@@ -56,12 +58,13 @@ class RolesController extends AppController
                 return $this->jsonResponse([
                     'code' => 200,
                     'refresh' => false,
-                    'redirect' => Router::url(['plugin' => 'Admin', 'controller' => 'Roles', 'action' => 'index'], true)
+                    'redirect' => $url
                 ]);
             }
             return $this->getError($data);
         }
 
+        $this->CURL = $url;
         $routers = TableRegistry::getTableLocator()->get('Admin.Routers')->getAllTree();
 
 
@@ -78,6 +81,7 @@ class RolesController extends AppController
     {
         $data = $this->Roles->get($id);
 
+        $url = Router::url(['plugin' => 'Admin', 'controller' => 'Roles', 'action' => 'index'], true);
 
         if ($this->request->is('post')) {
             $newData = $this->request->getData();
@@ -94,12 +98,14 @@ class RolesController extends AppController
                 return $this->jsonResponse([
                     'code' => 200,
                     'refresh' => false,
-                    'redirect' => Router::url(['plugin' => 'Admin', 'controller' => 'Roles', 'action' => 'index'], true)
+                    'redirect' => $url
                 ]);
             }
 
             return $this->getError($data);
         }
+
+        $this->CURL = $url;
 
         $routers = TableRegistry::getTableLocator()->get('Admin.Routers')->getAllTree();
 

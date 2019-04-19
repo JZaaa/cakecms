@@ -1,7 +1,7 @@
 var $C_RIGHT = $('.zad_container_right')
 var $CONTAINER = $('#zad_container_main')
-var CURRENT_URL = window.location.href.split('#')[0].split('?')[0]
 var $MENU_TREE = $('#zad_menu_tree')
+var CURRENT_URL = $MENU_TREE.data('activeUrl') ? $MENU_TREE.data('activeUrl') : window.location.href.split('#')[0].split('?')[0]
 var C_DIALOG = undefined // 当前的dialog插件
 
 $(document).ready(function() {

@@ -11,7 +11,9 @@ use Cake\ORM\TableRegistry;
 class AppController extends BaseController
 {
 
-    public $USER;
+    public $USER; // 用户
+    public $CURL = false; // 当前活动url
+
     public function initialize()
     {
         parent::initialize();
@@ -60,6 +62,7 @@ class AppController extends BaseController
         $this->set('SUPER', $this->USER['is_super']);
         // 若为普通后台页面，则获取页面菜单
         if ($this->viewBuilder()->getLayout() == 'admin') {
+            $this->set('CURL', $this->CURL);
             $this->getMenusTree();
         }
     }
