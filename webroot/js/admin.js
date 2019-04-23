@@ -303,10 +303,12 @@ $(document).ready(function() {
 
   Dialog.prototype.show = function() {
     var a = this.dialog.show({
+      onShow: function(e) {
+        C_DIALOG = this.dialog
+      }.bind(this),
       loaded: function(e) {
         $(e.target).trigger(ZAD.eventType.initUI)
-        C_DIALOG = this.dialog
-      }.bind(this)
+      }
     })
   }
 
@@ -818,6 +820,75 @@ $(document).ready(function() {
   })
 
 }(jQuery))
+
+/**
+ * [data-toggle="upload"]
+ * zui.uploader单图片上传封装，文档请参考zui.uploader
+ * 上传回调函数 data-response-handler="responseHandler"
+ * 删除回调函数 data-delete-action-on-done="deleteActionOnDone"
+ *
+ */
+;(function($) {
+  'use strict'
+
+  var Default = {
+    autoUpload: true,
+    multi_selection: false,
+    fileList: 'grid',
+    limitFilesCount: 1,
+    filters: {
+      mime_types: [
+        {title: '图片', extensions: 'jpg,png'},
+      ],
+      prevent_duplicates: true,
+      max_file_size: '5mb'
+    },
+    deleteActionOnDone: function(file, doRemoveFile) {
+      return true
+    },
+    responseHandler: function(responseObject, file) {
+      var response = (typeof responseObject.response === 'string') ? JSON.parse(responseObject.response) : responseObject.response
+      if (response.code !== 200) {
+        return response.message
+      }
+    }
+  }
+
+  var Selector = {
+    data: '[data-toggle="upload"]'
+  }
+
+  var Upload = function(element, options) {
+    if (options.responseHandler) {
+      options.responseHandler = options.responseHandler.toFunc()
+    }
+    if (options.deleteActionOnDone) {
+      options.deleteActionOnDone = options.deleteActionOnDone.toFunc()
+    }
+    if (options.file) {
+      options.staticFiles = [
+        { url: options.file, isImage: true, previewImage: options.file }
+      ]
+    }
+    return $(element).uploader($.extend({}, Default, options))
+  }
+
+  $(window).on('load', function () {
+    $(Selector.data).each(function() {
+      Upload(this, $(this).data())
+    })
+  })
+
+  $(document).on(ZAD.eventType.initUI, function(e) {
+    $(e.target).find(Selector.data).each(function() {
+      Upload(this, $(this).data())
+    })
+  })
+
+
+
+}(jQuery))
+
 /**
  * 外部插件等初始化配置
  */

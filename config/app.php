@@ -400,6 +400,7 @@ return [
         'Admin.Users.logout',
         'Admin.Users.info',
         'Admin.Cogs.clearCache',
-        'Admin.Home.index'
+        'Admin.Home.index',
+        'Admin.Upload.image'
     ]
 ];

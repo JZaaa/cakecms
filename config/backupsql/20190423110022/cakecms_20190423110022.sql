@@ -1,7 +1,7 @@
 /*
 MySQL Database SQL Dump
 数据库：cakecms
-生成日期：2019-04-19 12:36:18
+生成日期：2019-04-23 11:00:22
 *********************************************************************
 */
 
@@ -36,7 +36,7 @@ CREATE TABLE `menus` (
   `is_root` tinyint(2) DEFAULT '2' COMMENT '1.无法删除',
   PRIMARY KEY (`id`),
   KEY `parent_id_index` (`parent_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 /*Data for the table `menus` */
 
@@ -48,7 +48,9 @@ insert into `menus` (id,parent_id,name,icon,plugin,controller,action,params,url,
 ('5','2','数据库管理','','Admin','Cogs','database','','','0','1','1'),
 ('6','2','系统用户','','Admin','Users','index','','','0','1','1'),
 ('7','2','系统角色','','Admin','Roles','index','','','0','1','1'),
-('8','2','路由管理','icon-globe','Admin','Routers','index','','','0','1','2');
+('8','2','路由管理','icon-globe','Admin','Routers','index','','','0','1','2'),
+('9','0','内容管理','icon-pencil','','','','','','0','1','2'),
+('10','9','轮播图片','','Admin','Sliders','index','','','0','1','2');
 
 /*Table structure for table `role_routers` */
 
@@ -103,7 +105,7 @@ CREATE TABLE `routers` (
   `sort` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique` (`router`)
-) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 
 /*Data for the table `routers` */
 
@@ -131,7 +133,36 @@ insert into `routers` (id,parent_id,level,name,router,sort) values
 ('21','20','3','浏览','Admin.Menus.index','90'),
 ('22','20','3','新增','Admin.Menus.add','80'),
 ('23','20','3','编辑','Admin.Menus.edit','70'),
-('24','20','3','删除','Admin.Menus.delete','60');
+('24','20','3','删除','Admin.Menus.delete','60'),
+('25','0','1','内容管理','Admin.Article','0'),
+('26','25','2','轮播图片','Admin.Sliders','0'),
+('27','26','3','浏览','Admin.Sliders.index','90'),
+('28','26','3','新增','Admin.Sliders.add','80'),
+('29','26','3','编辑','Admin.Sliders.edit','70'),
+('30','26','3','删除','Admin.Sliders.delete','60');
+
+/*Table structure for table `sliders` */
+
+DROP TABLE IF EXISTS `sliders`;
+
+CREATE TABLE `sliders` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '轮播图',
+  `tag` varchar(20) NOT NULL COMMENT '标签，用于区分组',
+  `pic` varchar(100) NOT NULL COMMENT '图片地址',
+  `url` varchar(100) DEFAULT NULL COMMENT '跳转链接',
+  `title` varchar(50) DEFAULT NULL COMMENT '标题',
+  `sub` varchar(100) DEFAULT NULL COMMENT '描述',
+  `sort` tinyint(2) NOT NULL DEFAULT '0' COMMENT '排序',
+  `created` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `tag_index` (`tag`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+/*Data for the table `sliders` */
+
+insert into `sliders` (id,tag,pic,url,title,sub,sort,created) values
+('1','default','files/20190423/5cbe6b228207f.png','','测试','','0','2019-04-23 09:32:25'),
+('2','你好','files/20190423/5cbe6f1bbc0dc.png','','测','','0','2019-04-23 09:49:18');
 
 /*Table structure for table `users` */
 
@@ -155,8 +186,8 @@ CREATE TABLE `users` (
 /*Data for the table `users` */
 
 insert into `users` (id,role_id,username,password,nickname,status,login_count,login_ip,created,modified) values
-('1','1','admin','$2y$10$HGHnQVGnUvLqKfOF3Yg0kuiV2XwMkp9OlzAlxdYc69sKoS.e.EgDG','超级管理员','1','15','::1','2019-04-04 14:01:29','2019-04-19 12:35:55'),
-('2','2','test','$2y$10$KO7PetLfGt/6uxu91tjA0OVOyfnl1fKKfVwS7otxxn2wXMQSKkSnm','测试员','1','10','::1','2019-04-17 14:13:45','2019-04-19 12:10:46');
+('1','1','admin','$2y$10$HGHnQVGnUvLqKfOF3Yg0kuiV2XwMkp9OlzAlxdYc69sKoS.e.EgDG','超级管理员','1','21','::1','2019-04-04 14:01:29','2019-04-23 08:58:18'),
+('2','2','test','$2y$10$m8dvZjdTipnzEIX/ulNWhOa7eS/X.HS/NGMxrTRJcdxX1P07yQi4O','测试员','1','12','::1','2019-04-17 14:13:45','2019-04-19 13:32:28');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
