@@ -401,6 +401,26 @@ return [
         'Admin.Users.info',
         'Admin.Cogs.clearCache',
         'Admin.Home.index',
-        'Admin.Upload.image'
+        'Admin.Upload.image',
+        'Admin.Upload.file',
+        'Admin.Upload.media',
+        'Admin.Upload.fileManager',
+        'Admin.Upload.keUpload',
+    ],
+    /**
+     * 列表模板
+     * key => '模板文件名'
+     * value => '模板显示名'
+     * 模板位置：src/Template/Layout/tpl/
+     */
+    'listTpl' => [
+        'test' => '测试列表'
+    ],
+    /**
+     * 内容模板
+     * 模板位置：src/Template/Layout/tpl/
+     */
+    'contentTpl' => [
+        'test' => '测试内容'
     ]
 ];

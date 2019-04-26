@@ -38,6 +38,7 @@ class Menu extends Entity
         'controller' => true,
         'action' => true,
         'params' => true,
+        'extend' => true,
         'url' => true,
         'sort' => true,
         'is_root' => true,

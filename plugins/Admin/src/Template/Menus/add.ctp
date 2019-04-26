@@ -41,6 +41,10 @@
         </div>
     </div>
     <div class="form-group">
+        <label for="extend">拓展参数</label>
+        <input id="extend" name="extend" value="" type="text" class="form-control">
+    </div>
+    <div class="form-group">
         <label for="sort" class="required">排序</label>
         <input id="sort" name="sort" value="0" type="text" class="form-control" data-rule="required;integer(+0)">
     </div>

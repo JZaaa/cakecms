@@ -32,7 +32,11 @@
                 <td>
                     <?php
                     if (!empty($item->controller) && !empty($item->action)) {
-                        echo $this->Url->build(['plugin' => $item->plugin, 'controller' => $item->controller, 'action' => $item->action], true);
+                        $options = ['plugin' => $item->plugin, 'controller' => $item->controller, 'action' => $item->action];
+                        if (!empty($item->extend)) {
+                            $options[] = $item->extend;
+                        }
+                        echo $this->Url->build($options, true);
                     }
                     ?>
                 </td>

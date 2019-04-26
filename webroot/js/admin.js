@@ -835,6 +835,8 @@ $(document).ready(function() {
     autoUpload: true,
     multi_selection: false,
     fileList: 'grid',
+    max_retries: 0,
+    chunk_size: 0, // 关闭分片上传
     limitFilesCount: 1,
     filters: {
       mime_types: [
@@ -905,12 +907,15 @@ $(document).ready(function() {
       msgWrapper: 'div',
       msgMaker: function(opt){
         return opt.msg
+      },
+      invalid: function(form, errors) {
+        $.alertmsg(null, '表单存在 [ ' + errors.length + ' ] 处错误，请验证后提交！')
       }
     })
   }
 
   $(document).on(ZAD.eventType.initUI, function(e) {
-    zadFixedUi()
+    initPlugin()
   })
 
   /**
@@ -944,7 +949,59 @@ $(document).ready(function() {
 
   }
 
-  zadFixedUi()
+  /**
+   * kindeditor 初始化
+   *
+   */
+  var KindeditorInit = function() {
+    if (window.KindEditor) {
+      $('textarea[data-toggle="kindeditor"]').each(function() {
+        var $editor = $(this)
+        var options = $editor.data()
+        if (options.items && typeof options.items === 'string') {
+          options.items = options.items.replaceAll('\'', '').replaceAll(' ', '').split(',')
+        }
+        KindEditor.create($editor, {
+          allowFileManager : true,
+          bodyClass : 'article-content',
+          minHeight: options.minHeight || 260,
+          items: options.items || KindEditor.options.items,
+          uploadJson: options.uploadJson || ZADGLOAB.kindeditor.uploadJson,
+          fileManagerJson: options.fileManagerJson || ZADGLOAB.kindeditor.fileManagerJson
+        })
+      })
+    }
+  }
+
+  /**
+   * laydate初始化
+   * @constructor
+   */
+  var LaydateInit = function() {
+    if (window.laydate) {
+      $('[data-toggle="datepicker"]').each(function() {
+        var options = $(this).data()
+        if (!options.calendar) {
+          options.calendar = true
+        }
+        options.elem = this
+        laydate.render(options)
+      })
+    }
+  }
+
+  /**
+   * 插件初始化
+   */
+  function initPlugin() {
+    zadFixedUi()
+    KindeditorInit()
+    LaydateInit()
+  }
+
+  initPlugin()
+
+
 
 
 

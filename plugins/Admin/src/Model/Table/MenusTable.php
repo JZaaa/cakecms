@@ -89,8 +89,13 @@ class MenusTable extends Table
             ->allowEmptyString('action');
 
         $validator
+            ->scalar('extend')
+            ->maxLength('extend', 20, '拓展参数超出长度')
+            ->allowEmptyString('extend');
+
+        $validator
             ->scalar('params')
-            ->maxLength('params', 100, '其他参数超出长度')
+            ->maxLength('params', 100, '附加参数超出长度')
             ->allowEmptyString('params');
 
         $validator

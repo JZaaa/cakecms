@@ -20,7 +20,11 @@
             <ul id="zad_menu_tree" class="tree tree-menu" data-ride="tree" data-animate="true" data-active-url="<?php echo $CURL?>">
                 <?php foreach ($MENUS as $item):
                     if (!empty($item->controller) && !empty($item->action)) {
-                        $url =  $this->Url->build(['plugin' => $item->plugin, 'controller' => $item->controller, 'action' => $item->action], true);
+                        $options = ['plugin' => $item->plugin, 'controller' => $item->controller, 'action' => $item->action];
+                        if (!empty($item->extend)) {
+                            $options[] = $item->extend;
+                        }
+                        $url =  $this->Url->build($options, true);
                     } else {
                         $url = '#';
                     }
@@ -34,7 +38,11 @@
                             <ul>
                                 <?php foreach ($item->children as $value):
                                     if (!empty($value->controller) && !empty($value->action)) {
-                                        $url =  $this->Url->build(['plugin' => $value->plugin, 'controller' => $value->controller, 'action' => $value->action], true);
+                                        $options = ['plugin' => $value->plugin, 'controller' => $value->controller, 'action' => $value->action];
+                                        if (!empty($value->extend)) {
+                                            $options[] = $value->extend;
+                                        }
+                                        $url =  $this->Url->build($options, true);
                                     } else {
                                         $url = '#';
                                     }
@@ -79,6 +87,16 @@
 <script src="<?php echo $this->Url->webroot('assets/zui/lib/chosen/chosen.min.js')?>"></script>
 <script src="<?php echo $this->Url->webroot('assets/zui/lib/chosenicons/zui.chosenicons.min.js')?>"></script>
 <script src="<?php echo $this->Url->webroot('assets/validator/jquery.validator.min.js?local=zh-CN')?>"></script>
+<script>
+    // 公共常数
+    window.ZADGLOAB = {
+      baseUrl: '<?php echo $this->request->base?>',
+      kindeditor: {
+        uploadJson: '<?php echo $this->Url->build(['plugin' => 'Admin', 'controller' => 'Upload', 'action' => 'keUpload'])?>',
+        fileManagerJson: '<?php echo $this->Url->build(['plugin' => 'Admin', 'controller' => 'Upload', 'action' => 'fileManager'])?>',
+      }
+    }
+</script>
 <?php echo $this->fetch('js_before')?>
 <script src="<?php echo $this->Url->webroot('js/admin.js')?>"></script>
 <?php echo $this->fetch('js')?>
