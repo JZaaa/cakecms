@@ -23,10 +23,13 @@
                             <label for="title" class="required">标题</label>
                             <input id="title" name="title" value="" type="text" class="form-control" data-rule="required">
                         </div>
-
                         <div class="form-group">
                             <label for="subtitle">副标题</label>
                             <input id="subtitle" name="subtitle" value="" type="text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="abstract">摘要</label>
+                            <textarea id="abstract" name="abstract" class="form-control"></textarea>
                         </div>
                         <div class="row">
                             <div class="col-xs-3">
@@ -92,7 +95,7 @@
                     <div class="with-padding">
                         <div class="uploader form-group" data-toggle="upload" data-url="<?php echo $this->Url->build(['plugin' => 'Admin', 'controller' => 'Upload', 'action' => 'image'])?>" data-response-handler="responseHandler" data-delete-action-on-done="deleteActionOnDone">
                             <label>缩略图</label>
-                            <input type="hidden" name="thmub">
+                            <input type="hidden" name="thumb">
                             <div class="uploader-message text-center">
                                 <div class="content"></div>
                                 <button type="button" class="close">×</button>
@@ -132,11 +135,11 @@
         if (response.code !== 200) {
           return response.message
         } else {
-          $('input[name="thmub"]').val(response.data.filePath)
+          $('input[name="thumb"]').val(response.data.filePath)
         }
       }
       function deleteActionOnDone(file, doRemoveFile) {
-        $('input[name="thmub"]').val('')
+        $('input[name="thumb"]').val('')
         return true
       }
     </script>

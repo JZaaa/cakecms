@@ -45,7 +45,7 @@
             <div class="form-group">
                 <label for="tag">tag</label>
                 <select id="tag" name="tag" class="chosen-select form-control" data-toggle="selectpicker" onchange="tagChange(this)">
-                    <option value="default">default</option>
+                    <option value="home">home</option>
                     <?php foreach ($tags as $item):?>
                         <option value="<?php echo $item?>"><?php echo $item?></option>
                     <?php endforeach;?>

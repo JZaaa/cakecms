@@ -41,6 +41,7 @@ class SiteMenusController extends AppController
                     // 单页自动创建内容
                     TableRegistry::getTableLocator()->get('Admin.Articles')->createItem($res->id, $res->name);
                 }
+                $this->clearCacheAll();
                 return $this->jsonResponse(200);
             }
             return $this->getError($data);
@@ -83,6 +84,7 @@ class SiteMenusController extends AppController
             $data = $this->SiteMenus->patchEntity($data, $newData);
 
             if ($this->SiteMenus->save($data)) {
+                $this->clearCacheAll();
                 return $this->jsonResponse(200);
             }
             return $this->getError($data);
@@ -124,6 +126,7 @@ class SiteMenusController extends AppController
             $data = $this->SiteMenus->get($id);
 
             if ($this->SiteMenus->delete($data)) {
+                $this->clearCacheAll();
                 return $this->jsonResponse(200);
             }
         }

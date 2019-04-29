@@ -48,7 +48,7 @@ class SlidersController extends AppController
             $newData = $this->request->getData();
 
             if (empty($newData['tag'])) {
-                $newData['tag'] = !empty($newData['newtag']) ? $newData['newtag'] : 'default';
+                $newData['tag'] = !empty($newData['newtag']) ? $newData['newtag'] : 'home';
             }
 
             $data = $this->Sliders->patchEntity($data, $newData);
@@ -64,7 +64,7 @@ class SlidersController extends AppController
             'valueField' => 'tag'
         ])
             ->where([
-                'tag <>' => 'default'
+                'tag <>' => 'home'
             ])
             ->distinct('tag')
             ->toArray();

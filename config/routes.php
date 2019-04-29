@@ -53,11 +53,18 @@ Router::scope('/admin', ['plugin' => 'Admin'], function (RouteBuilder $routes) {
     $routes->fallbacks(DashedRoute::class);
 });
 
-Router::scope('/', function (RouteBuilder $routes) {
+Router::scope('/', ['plugin' => 'Website'], function (RouteBuilder $routes) {
+
+
     // Register scoped middleware for in scopes.
-//    $routes->registerMiddleware('csrf', new CsrfProtectionMiddleware([
-//        'httpOnly' => true
-//    ]));
+    $routes->registerMiddleware('csrf', new CsrfProtectionMiddleware([
+        'httpOnly' => true
+    ]));
+
+    $routes->connect('/', ['controller' => 'Home', 'action' => 'index']);
+
+    $routes->connect('/:controller/:action/*');
+
 
     /**
      * Apply a middleware to the current route scope.
@@ -70,12 +77,12 @@ Router::scope('/', function (RouteBuilder $routes) {
      * its action called 'display', and we pass a param to select the view file
      * to use (in this case, src/Template/Pages/home.ctp)...
      */
-    $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
+//    $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
 
     /**
      * ...and connect the rest of 'Pages' controller's URLs.
      */
-    $routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
+//    $routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
 
     /**
      * Connect catchall routes for all controllers.

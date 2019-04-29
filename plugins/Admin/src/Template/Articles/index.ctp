@@ -43,12 +43,17 @@
         <tbody>
         <?php foreach ($data as $item):?>
             <tr>
-                <td><?php echo $item->title?></td>
+                <td><?php echo $item->title;
+                    if ($item['istop'] == 1):?>
+                        <span class="label label-danger label-outline">置顶</span>
+                    <?php endif;?>
+                </td>
                 <td><?php echo $item->site_menu->name?></td>
                 <td><?php echo ($item->status == 1) ? '发布' : '草稿'?></td>
                 <td><?php echo $item->date?></td>
                 <td><?php echo $item->modified?></td>
                 <td>
+                    <a class="btn btn-sm" target="_blank" href="<?php echo $this->Url->build(['plugin' => 'Website', 'controller' => 'Page', 'action' => 'view', $item->id, '?' => ['tmp' => 1]])?>">预览</a>
                     <?php if (in_array($item->site_menu->type, [1])) {
                         // 单页不可删除
                         echo $this->Util->getBtn(

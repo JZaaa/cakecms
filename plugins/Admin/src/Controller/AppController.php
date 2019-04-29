@@ -3,6 +3,7 @@
 namespace Admin\Controller;
 
 use App\Controller\AppController as BaseController;
+use Cake\Cache\Cache;
 use Cake\Event\Event;
 use Cake\Http\Exception\InternalErrorException;
 use Cake\Http\Exception\UnauthorizedException;
@@ -170,6 +171,14 @@ class AppController extends BaseController
             'message' => '操作失败！' . $message,
             'code' => 300
         ]) : $message;
+    }
+
+    /**
+     * 清除所有缓存
+     */
+    public function clearCacheAll()
+    {
+        Cache::clearAll();
     }
 
 

@@ -26,10 +26,13 @@
                             <label for="title" class="required">标题</label>
                             <input id="title" name="title" value="<?php echo $data->title?>" type="text" class="form-control" data-rule="required">
                         </div>
-
                         <div class="form-group">
                             <label for="subtitle">副标题</label>
                             <input id="subtitle" name="subtitle" value="<?php echo $data->subtitle?>" type="text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="abstract">摘要</label>
+                            <textarea id="abstract" name="abstract" class="form-control"><?php echo $data->abstract?></textarea>
                         </div>
                         <div class="row">
                             <div class="col-xs-3">
@@ -93,7 +96,7 @@
                 </div>
                 <div class="tab-pane fade" id="otherContent">
                     <div class="with-padding">
-                        <div class="uploader form-group" data-toggle="upload" data-url="<?php echo $this->Url->build(['plugin' => 'Admin', 'controller' => 'Upload', 'action' => 'image'])?>" data-file="<?php echo $this->Url->webroot($data->thumb)?>"  data-response-handler="responseHandler" data-delete-action-on-done="deleteActionOnDone">
+                        <div class="uploader form-group" data-toggle="upload" data-url="<?php echo $this->Url->build(['plugin' => 'Admin', 'controller' => 'Upload', 'action' => 'image'])?>" data-file="<?php if (!empty($data->thumb)) echo $this->Url->webroot($data->thumb)?>"  data-response-handler="responseHandler" data-delete-action-on-done="deleteActionOnDone">
                             <label>缩略图</label>
                             <input type="hidden" name="thumb" value="<?php echo $data->thumb?>">
                             <div class="uploader-message text-center">
@@ -135,11 +138,11 @@
         if (response.code !== 200) {
           return response.message
         } else {
-          $('input[name="thmub"]').val(response.data.filePath)
+          $('input[name="thumb"]').val(response.data.filePath)
         }
       }
       function deleteActionOnDone(file, doRemoveFile) {
-        $('input[name="thmub"]').val('')
+        $('input[name="thumb"]').val('')
         return true
       }
     </script>

@@ -4,6 +4,7 @@ namespace Admin\Model\Table;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
+use Cake\Routing\Router;
 use Cake\Validation\Validator;
 
 /**
@@ -74,6 +75,11 @@ class ArticlesTable extends Table
             ->scalar('subtitle')
             ->maxLength('subtitle', 100, '副标题超出长度')
             ->allowEmptyString('subtitle');
+
+        $validator
+            ->scalar('abstract')
+            ->maxLength('abstract', 255, '摘要超出长度')
+            ->allowEmptyString('abstract');
 
         $validator
             ->scalar('author')
@@ -159,5 +165,97 @@ class ArticlesTable extends Table
 
         return $this->save($data);
 
+    }
+
+    /**
+     * 新增
+     * @param $data \Cake\Datasource\EntityInterface|int 实体或者id
+     * @return \Admin\Model\Entity\Article|bool
+     */
+    public function addVisit($data)
+    {
+        if (is_numeric($data)) {
+            $data = $this->find()
+                ->select([
+                    'id', 'visit'
+                ])
+                ->where([
+                    'id' => $data
+                ])
+                ->first();
+        }
+
+        if (!$data instanceof \Cake\Datasource\EntityInterface) {
+            return false;
+        }
+
+        $newData = $this->patchEntity($data, [
+            'id' => $data['id'],
+            'visit' => $data['visit'] + 1
+        ], [
+            'fields' => [
+                'visit'
+            ]
+        ]);
+
+        return $this->save($newData);
+    }
+
+    /**
+     * 获取文章上一篇/下一篇
+     * @param $id
+     * @param null $site_menu_id
+     * @return array
+     */
+    public function getRound($id, $site_menu_id = null)
+    {
+        $prev = $this->find()
+            ->select([
+                'id', 'site_menu_id', 'title'
+            ])
+            ->where([
+                'id <' => $id,
+                'site_menu_id' => $site_menu_id
+            ])
+            ->orderDesc('id')
+            ->limit(1);
+
+        $next = $this->find()
+            ->select([
+                'id', 'site_menu_id', 'title'
+            ])
+            ->where([
+                'id >' => $id,
+                'site_menu_id' => $site_menu_id
+            ])
+            ->orderDesc('id')
+            ->limit(1);
+
+        $data = $prev->unionAll($next)
+            ->toArray();
+
+        $round = [];
+        foreach ($data as $item) {
+            $item['url'] = Router::url(['plugin' => 'Website', 'controller' => 'Page', 'action' => 'view', $item['id']]);
+            $item['class'] = '';
+            if ($item['id'] > $id) {
+                $round['next'] = $item;
+            } else {
+                $round['prev'] = $item;
+            }
+        }
+
+        foreach (['next', 'prev'] as $item) {
+            if (!isset($round[$item])) {
+                $round[$item] = [
+                    'url' => 'javascript:;',
+                    'title' => '没有了！',
+                    'class' => 'disabled'
+                ];
+            }
+        }
+
+
+        return $round;
     }
 }

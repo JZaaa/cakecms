@@ -1,0 +1,307 @@
+/* 阴影 */
+html {
+  position: relative;
+  min-height: 100%;
+}
+html,
+*,
+:hover {
+  transition: background-color 0.3s linear;
+}
+a,
+a:hover,
+a:link,
+a:visited,
+a:focus {
+  outline: none;
+  text-decoration: none;
+  color: #03a9f4;
+}
+.position-absolute {
+  position: absolute!important;
+}
+.position-relative {
+  position: relative!important;
+}
+.text-white {
+  color: #fff;
+}
+.ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+/**
+ 1px 边框，为元素添加 Retina 屏幕下的 1px 边框（即 hairline），基于伪类 transform 实现。
+ <!-- 上边框 -->
+<div class="hairline-top"></div>
+<!-- 下边框 -->
+<div class="hairline-bottom"></div>
+<!-- 左边框 -->
+<div class="hairline-left"></div>
+<!-- 右边框 -->
+<div class="hairline-right"></div>
+<!-- 上下边框 -->
+<div class="hairline-top-bottom"></div>
+<!-- 全边框 -->
+<div class="hairline-surround"></div>
+  */
+[class*='hairline'] {
+  position: relative;
+}
+[class*='hairline']::after {
+  content: ' ';
+  position: absolute;
+  pointer-events: none;
+  box-sizing: border-box;
+  top: -50%;
+  left: -50%;
+  right: -50%;
+  bottom: -50%;
+  transform: scale(0.5);
+  border: 0 solid #ebedf0;
+}
+[class*='hairline']::after-top::after {
+  border-top-width: 1px;
+}
+[class*='hairline']::after-left::after {
+  border-left-width: 1px;
+}
+[class*='hairline']::after-right::after {
+  border-right-width: 1px;
+}
+[class*='hairline']::after-bottom::after {
+  border-bottom-width: 1px;
+}
+[class*='hairline']::after-top-bottom::after {
+  border-width: 1px 0;
+}
+[class*='hairline']::after-surround::after {
+  border-width: 1px;
+}
+.hairline-top::after {
+  border-top-width: 1px;
+}
+.hairline-left::after {
+  border-left-width: 1px;
+}
+.hairline-right::after {
+  border-right-width: 1px;
+}
+.hairline-bottom::after {
+  border-bottom-width: 1px;
+}
+.hairline-top-bottom::after {
+  border-width: 1px 0;
+}
+.hairline-surround::after {
+  border-width: 1px;
+}
+.placeholder {
+  color: #aaa;
+}
+.bg-muted {
+  background-color: #f8f9fa;
+}
+.bg-white {
+  background: #fff;
+}
+.text-default {
+  color: #353535 !important;
+}
+.letter-space {
+  letter-spacing: 1px;
+}
+.letter-space-lg {
+  letter-spacing: 2px;
+}
+.space {
+  margin-bottom: 20px;
+}
+.space-lg {
+  margin-bottom: 40px;
+}
+.strong {
+  font-weight: 700;
+}
+.large {
+  font-size: 125%!important;
+}
+.bg-img-response {
+  width: 100%;
+  height: 100%;
+  z-index: -10;
+  zoom: 1;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-size: cover;
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+  background-position: center 0;
+}
+.shadow-0,
+.shadow-none {
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  -ms-box-shadow: none;
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+.hover-blue:hover {
+  color: #03a9f4;
+}
+.btn.btn-blue {
+  color: #03a9f4;
+  background-color: transparent;
+  border-color: rgba(3, 169, 244, 0.5);
+}
+.btn.btn-blue:active,
+.btn.btn-blue.active,
+.btn.btn-blue:hover {
+  border-color: #03a9f4;
+  background-color: rgba(3, 169, 244, 0.08);
+}
+.btn.btn-blue.flat {
+  border: 0;
+  background-color: transparent;
+  color: #03a9f4;
+}
+.btn.btn-blue.flat:active,
+.btn.btn-blue.flat.active,
+.btn.btn-blue.flat:hover {
+  background-color: rgba(46, 188, 252, 0.2);
+}
+.btn.btn-blue:focus,
+.btn.btn-blue.focus {
+  box-shadow: 0 0 0 0 rgba(46, 188, 252, 0.5);
+}
+.btn.btn-white {
+  color: #fff;
+  background-color: transparent;
+  border-color: rgba(255, 255, 255, 0.5);
+}
+.btn.btn-white:active,
+.btn.btn-white.active,
+.btn.btn-white:hover {
+  border-color: #fff;
+  background-color: rgba(255, 255, 255, 0.08);
+}
+.btn.btn-white.flat {
+  border: 0;
+  background-color: transparent;
+  color: #fff;
+}
+.btn.btn-white.flat:active,
+.btn.btn-white.flat.active,
+.btn.btn-white.flat:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+.btn.btn-white:focus,
+.btn.btn-white.focus {
+  box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.5);
+}
+.w-2 {
+  float: left;
+  width: 20%;
+  position: relative;
+  min-height: 1px;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+.label.label-white {
+  background-color: #fff;
+  color: #353535;
+}
+.label.label-white.label-outline {
+  color: #fff;
+  background: 0 0;
+  border: 1px solid #fff;
+}
+.dropdown-menu {
+  padding: 0;
+}
+.dropdown-menu > li > a {
+  color: #5A738E;
+}
+.dropdown-menu > li > a:focus,
+.dropdown-menu > li > a:hover {
+  text-decoration: none;
+  background-color: #f5f5f5;
+  color: #353535;
+}
+.img-responsive {
+  width: 100%;
+}
+#zad-header {
+  border-bottom: 1px solid #d8dce5;
+  -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 0 3px 0 rgba(0, 0, 0, 0.04);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 0 3px 0 rgba(0, 0, 0, 0.04);
+  margin-bottom: 0;
+  padding: 5px 0;
+}
+#zad-header .collapse .navbar-nav > li > a,
+#zad-header .navbar-brand {
+  height: 60px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  line-height: 40px;
+}
+#zad-header .navbar-toggle {
+  margin-top: 12px;
+}
+#zad-header .navbar-toggle .icon-bar {
+  background-color: #999;
+}
+#zad-header .collapse {
+  float: right;
+}
+#zad-header .navbar-nav {
+  text-align: center;
+}
+#zad-header .navbar-nav > li.active > a {
+  color: #03a9f4;
+}
+#zad-header .navbar-brand {
+  font-size: 28px;
+}
+#zad-header .dropdown-menu {
+  padding: 0;
+}
+#zad-header .dropdown-menu > li > a {
+  padding: 10px 0;
+}
+#zad-header .dropdown-menu > li > a:focus,
+#zad-header .dropdown-menu > li > a:hover {
+  text-decoration: none;
+  background-color: #03a9f4;
+  color: #fff;
+}
+#footer {
+  border-top: 1px solid #eee;
+  position: absolute;
+  padding-top: 20px;
+  bottom: 0;
+  width: 100%;
+  color: grey;
+  background-color: #f8f9fa;
+}
+#footer ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+#footer ul li {
+  line-height: 1.8;
+  font-size: 12px;
+}
+#footer .copyright {
+  margin-top: 10px;
+  border-top: 1px solid #ddd;
+  padding: 10px 0;
+  text-align: center;
+}
+.zad-list-nav .nav li.active a {
+  color: #03a9f4;
+}
+/*# sourceMappingURL=website.css.map */

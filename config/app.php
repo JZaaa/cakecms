@@ -411,16 +411,18 @@ return [
      * 列表模板
      * key => '模板文件名'
      * value => '模板显示名'
-     * 模板位置：src/Template/Layout/tpl/
+     * 模板位置：src/Template/Layout/Tpl/
      */
     'listTpl' => [
-        'test' => '测试列表'
+        'list' => '图文列表',
+//        'thumb_list' => '卡片列表'
     ],
     /**
      * 内容模板
-     * 模板位置：src/Template/Layout/tpl/
+     * 模板位置：src/Template/Tpl/
      */
     'contentTpl' => [
-        'test' => '测试内容'
+        'single' => '单页内容',
+        'list_view' => '新闻内容'
     ]
 ];

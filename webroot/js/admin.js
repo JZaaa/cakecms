@@ -872,7 +872,12 @@ $(document).ready(function() {
         { url: options.file, isImage: true, previewImage: options.file }
       ]
     }
-    return $(element).uploader($.extend({}, Default, options))
+    var opt = $.extend({}, Default, options)
+    var $this = $(element)
+    if (opt.limitFilesCount === 1) {
+      $this.addClass('single-upload')
+    }
+    return $this.uploader(opt)
   }
 
   $(window).on('load', function () {

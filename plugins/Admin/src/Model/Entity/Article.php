@@ -42,6 +42,7 @@ class Article extends Entity
         'title' => true,
         'color' => true,
         'subtitle' => true,
+        'abstract' => true,
         'author' => true,
         'source' => true,
         'date' => true,

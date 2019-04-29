@@ -208,3 +208,5 @@ Type::build('timestamp')
 //Inflector::rules('transliteration', ['/å/' => 'aa']);
 
 Plugin::load('Admin', ['bootstrap' => false, 'routes' => true]);
+
+Plugin::load('Website', ['bootstrap' => false, 'routes' => true]);

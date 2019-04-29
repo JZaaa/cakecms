@@ -84,4 +84,25 @@ class SlidersTable extends Table
 
         return $validator;
     }
+
+    /**
+     * 获取轮播图
+     * @param string $tag
+     * @return \Cake\Datasource\ResultSetInterface
+     */
+    public function getData($tag = 'home')
+    {
+        $conditions = [];
+        if (!empty($tag)) {
+            $conditions['tag'] = $tag;
+        }
+
+        return $this->find()
+            ->where($conditions)
+            ->order([
+                'sort' => 'desc',
+                'id' => 'desc'
+            ])
+            ->all();
+    }
 }

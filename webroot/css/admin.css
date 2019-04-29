@@ -98,6 +98,16 @@ a:focus {
   background: 0 0;
   border: 1px solid #fff;
 }
+.single-upload .file-list-grid .file-wrapper > .actions {
+  width: 100%;
+}
+.single-upload .file-list-grid .file {
+  width: 90%;
+  margin-bottom: 5px;
+}
+.single-upload .file-list-grid .file .file-icon {
+  width: 100%;
+}
 .zad_container_main {
   min-height: 100%;
 }

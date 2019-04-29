@@ -1,7 +1,7 @@
 /*
 MySQL Database SQL Dump
 数据库：cakecms
-生成日期：2019-04-26 17:00:21
+生成日期：2019-04-29 16:17:43
 *********************************************************************
 */
 
@@ -27,6 +27,7 @@ CREATE TABLE `articles` (
   `title` varchar(50) NOT NULL COMMENT '标题',
   `color` varchar(10) DEFAULT NULL COMMENT '标题颜色',
   `subtitle` varchar(100) DEFAULT NULL COMMENT '副标题',
+  `abstract` varchar(255) DEFAULT NULL COMMENT '摘要',
   `author` varchar(30) DEFAULT NULL COMMENT '作者',
   `source` varchar(30) DEFAULT NULL COMMENT '来源',
   `date` datetime DEFAULT NULL COMMENT '发布日期',
@@ -41,7 +42,20 @@ CREATE TABLE `articles` (
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `site_menus_index` (`site_menu_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+/*Data for the table `articles` */
+
+insert into `articles` (id,site_menu_id,title,color,subtitle,abstract,author,source,date,thumb,content,seo_keywords,seo_description,status,istop,visit,created,modified) values
+('2','3','公司简介','','','','','','2019-04-28 15:29:20','files/image/20190428/5cc558053758f.jpg','<p>
+	公司简介内容
+</p>
+<p>
+	<img src="/github/cakecms/files/image/20190428/5cc55884d7bdd.jpg" alt="" />
+</p>','','','1','2','4','2019-04-28 15:29:20','2019-04-29 14:50:31'),
+('4','4','测试新闻','#3f51b5','123','这是测试新闻','admin','本站','2019-04-29 14:42:16','files/image/20190429/5cc69fb77dd6e.jpg','士大夫士大夫','','','1','1','19','2019-04-29 14:42:35','2019-04-29 15:55:52'),
+('5','4','第二条新闻','','','','','','2019-04-29 15:22:00','','','','','1','2','4','2019-04-29 15:22:10','2019-04-29 15:55:40'),
+('6','4','第三条新闻','','','','','','2019-04-29 15:22:13','','','','','1','2','4','2019-04-29 15:22:20','2019-04-29 15:49:37');
 
 /*Table structure for table `menus` */
 
@@ -81,6 +95,19 @@ insert into `menus` (id,parent_id,name,icon,plugin,controller,action,extend,para
 ('11','9','网站栏目','','Admin','SiteMenus','index','','','','0','1','2'),
 ('12','9','单页内容','','Admin','Articles','index','1','','','0','1','2'),
 ('14','9','列表内容','','Admin','Articles','index','2','','','0','1','2');
+
+/*Table structure for table `options` */
+
+DROP TABLE IF EXISTS `options`;
+
+CREATE TABLE `options` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '配置表',
+  `name` varchar(20) DEFAULT NULL COMMENT '配置名称',
+  `key_field` varchar(30) NOT NULL COMMENT 'key值',
+  `value_field` text COMMENT 'value值',
+  `group` varchar(20) NOT NULL COMMENT '分组',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 /*Table structure for table `role_routers` */
 
@@ -203,14 +230,15 @@ CREATE TABLE `site_menus` (
   `content_tpl` varchar(20) NOT NULL COMMENT '内容模板',
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  KEY `parent_id_index` (`parent_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 /*Data for the table `site_menus` */
 
 insert into `site_menus` (id,parent_id,name,subname,pic,type,status,link,sort,list_tpl,content_tpl,created,modified) values
-('1','0','公司简介','','files/20190423/5cbec6e01ee22.png','1','1','http://www.baidu.com/','3','','','2019-04-23 15:55:31','2019-04-23 16:04:17'),
-('2','1','公司简介1','','','1','1','','0','','','2019-04-23 16:05:00','2019-04-23 16:05:00');
+('4','0','新闻中心','','','2','1','','0','list','list_view','2019-04-28 16:27:18','2019-04-29 15:30:00'),
+('3','0','公司简介','info','files/image/20190428/5cc559ae7fa5f.jpg','1','1','','99','','single','2019-04-28 15:29:20','2019-04-28 16:27:36');
 
 /*Table structure for table `sliders` */
 
@@ -227,13 +255,13 @@ CREATE TABLE `sliders` (
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `tag_index` (`tag`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*Data for the table `sliders` */
 
 insert into `sliders` (id,tag,pic,url,title,sub,sort,created) values
-('1','default','files/20190423/5cbe6b228207f.png','','测试','','0','2019-04-23 09:32:25'),
-('2','你好','files/20190423/5cbe6f1bbc0dc.png','','测','','0','2019-04-23 09:49:18');
+('4','home','files/image/20190429/5cc6b25e750b8.jpg','http://localhost:81/github/cakecms/page/index/3','','','0','2019-04-29 16:14:37'),
+('2','home','files/image/20190429/5cc6ae5628078.jpg','','测','','0','2019-04-23 09:49:18');
 
 /*Table structure for table `users` */
 
@@ -257,7 +285,7 @@ CREATE TABLE `users` (
 /*Data for the table `users` */
 
 insert into `users` (id,role_id,username,password,nickname,status,login_count,login_ip,created,modified) values
-('1','1','admin','$2y$10$HGHnQVGnUvLqKfOF3Yg0kuiV2XwMkp9OlzAlxdYc69sKoS.e.EgDG','超级管理员','1','29','::1','2019-04-04 14:01:29','2019-04-26 13:40:47'),
+('1','1','admin','$2y$10$HGHnQVGnUvLqKfOF3Yg0kuiV2XwMkp9OlzAlxdYc69sKoS.e.EgDG','超级管理员','1','32','::1','2019-04-04 14:01:29','2019-04-29 14:49:06'),
 ('2','2','test','$2y$10$m8dvZjdTipnzEIX/ulNWhOa7eS/X.HS/NGMxrTRJcdxX1P07yQi4O','测试员','1','14','::1','2019-04-17 14:13:45','2019-04-23 13:17:17');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
