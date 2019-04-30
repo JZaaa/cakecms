@@ -42,13 +42,15 @@ class AppController extends BaseController
          * _CurrentMenu_ =>  当前页面根导航信息
          * _SiteMenus_ =>  顶部导航
          * _Breadcrumbs_ =>  当前页面路径(面包屑)
+         * _SiteCache_ =>  网站缓存信息
          */
         $this->set([
             '_ActiveMenu_' => isset($breadcrumbs[1]) ? $breadcrumbs[1]['url'] : $this->ACTIVE_NAV,
             '_ActiveNav_' => $this->ACTIVE_NAV,
             '_CurrentMenu_' => isset($breadcrumbs[1]) ? $breadcrumbs[1] : null,
             '_SiteMenus_' => $this->SITE_MENU['tree'],
-            '_Breadcrumbs_' => $breadcrumbs
+            '_Breadcrumbs_' => $breadcrumbs,
+            '_SiteCache_' => getSiteCache()
         ]);
     }
 
@@ -103,7 +105,7 @@ class AppController extends BaseController
     /**
      * @param int $numPerPage
      */
-    public function setPage($numPerPage = 10)
+    public function setPage($numPerPage = 12)
     {
         $page = !empty($this->request->getData('page')) ? $this->request->getData('page') : (!empty($this->request->getQuery('page')) ? $this->request->getQuery('page') : 1);
 

@@ -29,7 +29,7 @@
                                             <a style="<?php if ($item->color) echo 'color: ', $item->color , '';?>" href="<?php echo $this->Url->build(['plugin' => 'Website', 'controller' => 'Page', 'action' => 'view', $item->id])?>">
                                                 <?php echo $item['title']?>
                                                 <?php if ($item['istop'] == 1):?>
-                                                    <span class="label label-badge label-danger small label-outline">置顶</span>
+                                                    <span class="label label-badge label-danger">置顶</span>
                                                 <?php endif;?>
                                             </a>
                                         </h4>

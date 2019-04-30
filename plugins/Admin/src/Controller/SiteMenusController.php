@@ -34,6 +34,10 @@ class SiteMenusController extends AppController
 
             $newData = $this->request->getData();
 
+            if (empty($newData['custom_url'])) {
+                unset($newData['custom_url']);
+            }
+
             $data = $this->SiteMenus->patchEntity($data, $newData);
 
             if ($res = $this->SiteMenus->save($data)) {
@@ -80,6 +84,22 @@ class SiteMenusController extends AppController
 
         if ($this->request->is('post')) {
             $newData = $this->request->getData();
+
+            if (empty($newData['custom_url'])) {
+                unset($newData['custom_url']);
+            } else {
+                $customUrl = checkCustomUrl($newData['custom_url']);
+
+                if ($customUrl['error']) {
+                    return $this->jsonResponse([
+                        'code' => 300,
+                        'message' => $customUrl['message']
+                    ]);
+                }
+
+                $newData['custom_url'] = $customUrl['url'];
+
+            }
 
             $data = $this->SiteMenus->patchEntity($data, $newData);
 

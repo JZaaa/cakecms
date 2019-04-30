@@ -47,6 +47,7 @@ class AppController extends BaseController
         }
         $this->USER = $this->Auth->user();
 
+        $this->set('_SiteCache_', getSiteCache());
         $this->checkAuth();
 
         $this->viewBuilder()->setLayout('admin');

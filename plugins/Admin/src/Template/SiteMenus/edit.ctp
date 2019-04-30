@@ -11,6 +11,7 @@
     $.CurrentDialog().find('input[name="pic"]').val('')
     return true
   }
+  $.CurrentDialog().find('[data-toggle="popover"]').popover();
 </script>
 <form action="<?php echo $this->Url->build(['plugin' => 'Admin', 'controller' => 'SiteMenus', 'action' => 'edit', $id])?>" method="post" data-toggle="ajaxform" autocomplete="off">
     <input type="hidden" value="<?php echo $data->id?>" name="id">
@@ -83,6 +84,10 @@
             <div class="uploader-status pull-right text-muted"></div>
             <button type="button" class="btn btn-link uploader-btn-browse"><i class="icon icon-plus"></i> 选择文件</button>
         </div>
+    </div>
+    <div class="form-group">
+        <label for="custom_url">固定链接 </label> <i class="icon icon-info-sign text-blue" data-toggle="popover" data-placement="top" data-content="请勿使用纯数字或特殊字符作为链接地址,保留地址:/home,/admin,/page"></i>
+        <input id="custom_url" name="custom_url" value="<?php echo $data->custom_url?>" placeholder="示例：/about 或 /my-page/index" type="text" class="form-control">
     </div>
     <div class="form-group">
         <label for="link">外链</label>

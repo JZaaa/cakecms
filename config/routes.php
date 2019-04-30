@@ -63,7 +63,11 @@ Router::scope('/', ['plugin' => 'Website'], function (RouteBuilder $routes) {
 
     $routes->connect('/', ['controller' => 'Home', 'action' => 'index']);
 
-    $routes->connect('/:controller/:action/*');
+    $routes->connect('/home/*', ['controller' => 'Home', 'action' => 'index']);
+
+    $routes->connect('/page/:action/*', ['controller' => 'page']);
+
+    $routes->connect('/*', ['controller' => 'page', 'action' => 'custom']);
 
 
     /**

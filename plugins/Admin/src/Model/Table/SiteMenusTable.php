@@ -94,6 +94,13 @@ class SiteMenusTable extends Table
             ->allowEmptyString('content_tpl', false, '列表模板不能为空');
 
         $validator
+            ->scalar('custom_url')
+            ->maxLength('custom_url', 100, '固定链接超出长度')
+            ->requirePresence('custom_url', 'create', '固定链接不能为空')
+            ->allowEmptyString('custom_url')
+            ->add('custom_url', 'unique', ['rule' => 'validateUnique', 'provider' => 'table', 'message' => '固定链接重复']);
+
+        $validator
             ->scalar('list_tpl')
             ->maxLength('list_tpl', 20, '内容模板超出长度')
             ->allowEmptyString('list_tpl');
@@ -128,6 +135,7 @@ class SiteMenusTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['parent_id'], 'ParentSiteMenus', '无匹配父类'));
+        $rules->add($rules->isUnique(['custom_url'], '固定链接重复'));
 
         return $rules;
     }

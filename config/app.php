@@ -414,8 +414,9 @@ return [
      * 模板位置：src/Template/Layout/Tpl/
      */
     'listTpl' => [
+        'text_list' => '文字列表',
         'list' => '图文列表',
-//        'thumb_list' => '卡片列表'
+        'thumb_list' => '卡片列表'
     ],
     /**
      * 内容模板

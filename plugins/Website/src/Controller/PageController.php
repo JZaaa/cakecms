@@ -31,9 +31,17 @@ class PageController extends AppController
     }
 
 
+    /**
+     * 页面主入口
+     * @param null|int|\Cake\Datasource\EntityInterface $menu_id, int 类型为栏目id,实现EntityInterface接口为直接传递栏目实体
+     */
     public function index($menu_id = null)
     {
-        $menu = isset($this->SITE_MENU['menus'][$menu_id]) ? $this->SITE_MENU['menus'][$menu_id] : null;
+        if ($menu_id instanceof \Cake\Datasource\EntityInterface) {
+            $menu = $menu_id;
+        } else {
+            $menu = isset($this->SITE_MENU['menus'][$menu_id]) ? $this->SITE_MENU['menus'][$menu_id] : null;
+        }
 
         if (empty($menu)) {
             throw new NotFoundException();
@@ -156,6 +164,23 @@ class PageController extends AppController
         $this->set(compact('data', 'round'));
 
         $this->pageRender($data['site_menu']['content_tpl']);
+    }
+
+    /**
+     * 自定义url
+     */
+    public function custom()
+    {
+        $url = $this->request->getPath();
+        $menu = $this->SiteMenus->find()
+            ->where([
+                'custom_url' => $url
+            ])
+            ->firstOrFail();
+
+        $this->ACTIVE_NAV_ID = $menu['id'];
+
+        $this->index($menu);
     }
 
 

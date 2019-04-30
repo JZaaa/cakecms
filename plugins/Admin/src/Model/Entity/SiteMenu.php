@@ -41,6 +41,7 @@ class SiteMenu extends Entity
         'type' => true,
         'status' => true,
         'link' => true,
+        'custom_url' => true,
         'list_tpl' => true,
         'content_tpl' => true,
         'sort' => true,

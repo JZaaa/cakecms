@@ -4,7 +4,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>CakeCMS</title>
+    <link href="<?php echo $this->Url->webroot('/favicon.ico')?>" rel="Shortcut Icon">
+    <title><?php echo $_SiteCache_['title']['value_field']?> - 后台管理系统</title>
     <link href="<?php echo $this->Url->webroot('assets/zui/css/zui.min.css')?>" rel="stylesheet">
     <link href="<?php echo $this->Url->webroot('assets/zui/lib/bootbox/bootbox.min.css')?>" rel="stylesheet">
     <link href="<?php echo $this->Url->webroot('assets/zui/lib/chosen/chosen.min.css')?>" rel="stylesheet">
@@ -15,7 +16,7 @@
 <body>
 <div id="zad_container_main" class="container zad_container_main load-indicator">
     <div class="zad_container_left">
-        <a class="logo" href="<?php echo $this->Url->build(['plugin' => 'Admin', 'controller' => 'Home', 'action' => 'index'])?>">CakeCMS</a>
+        <a class="logo" href="<?php echo $this->Url->build(['plugin' => 'Admin', 'controller' => 'Home', 'action' => 'index'])?>"><?php echo $_SiteCache_['title']['value_field']?></a>
         <nav class="menu zad_menu" data-ride="menu">
             <ul id="zad_menu_tree" class="tree tree-menu" data-ride="tree" data-animate="true" data-active-url="<?php echo $CURL?>">
                 <?php foreach ($MENUS as $item):
