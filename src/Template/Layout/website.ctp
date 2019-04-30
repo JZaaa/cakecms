@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="<?php echo $this->Url->webroot('/favicon.ico')?>" rel="Shortcut Icon">
     <title><?php echo $_SiteCache_['title']['value_field']?></title>
+    <meta name="keywords" content="<?php echo $_SiteCache_['seo_keywords']['value_field']?>">
+    <meta name="description" content="<?php echo $_SiteCache_['seo_description']['value_field']?>">
     <link href="<?php echo $this->Url->webroot('assets/zui/css/zui.min.css')?>" rel="stylesheet">
     <link href="<?php echo $this->Url->webroot('assets/zui/lib/chosen/chosen.min.css')?>" rel="stylesheet">
     <?php echo $this->fetch('css')?>
