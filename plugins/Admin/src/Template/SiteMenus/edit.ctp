@@ -24,7 +24,7 @@
         <select id="parent_id" name="parent_id" class="chosen-select form-control" data-toggle="selectpicker">
             <option value="0">顶级</option>
             <?php foreach ($parents as $key => $item):?>
-                <option value="<?php echo $key?>" <?php if ($data->type == $key) echo 'selected'?>><?php echo $item?></option>
+                <option value="<?php echo $key?>" <?php if ($data->parent_id == $key) echo 'selected'?>><?php echo $item?></option>
             <?php endforeach;?>
         </select>
     </div>

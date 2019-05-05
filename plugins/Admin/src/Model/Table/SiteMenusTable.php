@@ -96,7 +96,6 @@ class SiteMenusTable extends Table
         $validator
             ->scalar('custom_url')
             ->maxLength('custom_url', 100, '固定链接超出长度')
-            ->requirePresence('custom_url', 'create', '固定链接不能为空')
             ->allowEmptyString('custom_url')
             ->add('custom_url', 'unique', ['rule' => 'validateUnique', 'provider' => 'table', 'message' => '固定链接重复']);
 

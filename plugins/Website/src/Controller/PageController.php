@@ -71,6 +71,9 @@ class PageController extends AppController
             ])
             ->firstOrFail();
 
+        $this->SEO_KEYWORDS = $data['seo_keywords'];
+        $this->SEO_DESCRIPTION = $data['seo_description'];
+
         $this->set(compact('data'));
 
         $this->pageRender($menu['content_tpl']);
@@ -160,6 +163,8 @@ class PageController extends AppController
         }
 
         $this->ACTIVE_NAV_ID = $data['site_menu']['id'];
+        $this->SEO_KEYWORDS = $data['seo_keywords'];
+        $this->SEO_DESCRIPTION = $data['seo_description'];
 
         $this->set(compact('data', 'round'));
 

@@ -2,7 +2,7 @@
 <div class="container">
     <div class="space"></div>
     <div class="row">
-        <?php $hasNav = (count($_CurrentMenu_) > 1);?>
+        <?php $hasNav = !empty($_CurrentMenu_['children']);?>
         <?php if ($hasNav):?>
             <div class="col-xs-12 col-sm-3">
                 <?php echo $this->element('list_nav')?>

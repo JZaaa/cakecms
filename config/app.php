@@ -142,7 +142,7 @@ return [
             'className' => 'Cake\Cache\Engine\FileEngine',
             'path' => CACHE . 'site/',
             'url' => env('CACHE_DEFAULT_URL', null),
-            'duration' => '+1 week',
+            'duration' => '+1 years',
         ]
     ],
 

@@ -26,6 +26,9 @@ a:focus {
 .text-white {
   color: #fff;
 }
+.text-blue {
+  color: #03a9f4;
+}
 .ellipsis {
   overflow: hidden;
   white-space: nowrap;

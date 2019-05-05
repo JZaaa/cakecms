@@ -16,6 +16,8 @@ class AppController extends BaseController
     public $ACTIVE_NAV = ''; // 当前页面所属栏目url
     public $SITE_MENU = null; // 栏目缓存
     public $ACTIVE_NAV_ID = null; // 当前页面所属栏目id,用于手动指定栏目
+    public $SEO_KEYWORDS = null;
+    public $SEO_DESCRIPTION = null;
 
     private $CacheKey = 'site';
 
@@ -34,6 +36,17 @@ class AppController extends BaseController
 
         $breadcrumbs = $this->getBreadcrumbs();
 
+        $cache = getSiteCache();
+
+        if (empty($this->SEO_KEYWORDS)) {
+            $this->SEO_KEYWORDS = $cache['seo_keywords']['value_field'];
+        }
+
+        if (empty($this->SEO_DESCRIPTION)) {
+            $this->SEO_DESCRIPTION = $cache['seo_description']['value_field'];
+        }
+
+
 
         /**
          * 公共变量
@@ -43,6 +56,8 @@ class AppController extends BaseController
          * _SiteMenus_ =>  顶部导航
          * _Breadcrumbs_ =>  当前页面路径(面包屑)
          * _SiteCache_ =>  网站缓存信息
+         * _SeoKeywords_ =>  seo关键字
+         * _SeoDescription_ =>  seo描述
          */
         $this->set([
             '_ActiveMenu_' => isset($breadcrumbs[1]) ? $breadcrumbs[1]['url'] : $this->ACTIVE_NAV,
@@ -50,7 +65,9 @@ class AppController extends BaseController
             '_CurrentMenu_' => isset($breadcrumbs[1]) ? $breadcrumbs[1] : null,
             '_SiteMenus_' => $this->SITE_MENU['tree'],
             '_Breadcrumbs_' => $breadcrumbs,
-            '_SiteCache_' => getSiteCache()
+            '_SiteCache_' => $cache,
+            '_SeoKeywords_' => $this->SEO_KEYWORDS,
+            '_SeoDescription_' => $this->SEO_DESCRIPTION,
         ]);
     }
 
