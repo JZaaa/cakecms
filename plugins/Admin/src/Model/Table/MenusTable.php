@@ -247,7 +247,6 @@ class MenusTable extends Table
                 $router = true;
             }
 
-            debug($router);
             // 生成菜单树
             $menus = $this->find()
                 ->order([
