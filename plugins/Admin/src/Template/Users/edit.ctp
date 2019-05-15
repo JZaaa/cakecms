@@ -29,7 +29,7 @@
         </div>
         <div class="col-sm-6">
             <div class="form-group">
-                <label for="role_id">状态</label>
+                <label for="status">状态</label>
                 <select id="status" name="status" class="chosen-select form-control" data-toggle="selectpicker">
                     <?php foreach ($status as $key => $item):?>
                         <option value="<?php echo $key?>" <?php if ($key == $data->status) echo 'selected'?>><?php echo $item?></option>

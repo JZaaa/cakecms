@@ -112,7 +112,11 @@ class RolesController extends AppController
         $roles = TableRegistry::getTableLocator()->get('Admin.RoleRouters')->find('list', [
             'keyField' => 'router',
             'valueField' => 'id'
-        ])->toArray();
+        ])
+            ->where([
+                'role_id' => $id
+            ])
+            ->toArray();
 
 
         $this->set(compact('id', 'data', 'roles', 'routers'));
